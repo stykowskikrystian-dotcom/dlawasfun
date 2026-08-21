@@ -1,0 +1,512 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+export default function Home() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [soundOn, setSoundOn] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.loop = true;
+
+    const playVideo = () => {
+      if (video.paused) void video.play().catch(() => undefined);
+    };
+    const resumeWhenVisible = () => {
+      if (!document.hidden) playVideo();
+    };
+
+    playVideo();
+    video.addEventListener("loadeddata", playVideo);
+    video.addEventListener("canplay", playVideo);
+    window.addEventListener("pageshow", playVideo);
+    document.addEventListener("visibilitychange", resumeWhenVisible);
+
+    return () => {
+      video.removeEventListener("loadeddata", playVideo);
+      video.removeEventListener("canplay", playVideo);
+      window.removeEventListener("pageshow", playVideo);
+      document.removeEventListener("visibilitychange", resumeWhenVisible);
+    };
+  }, []);
+
+  const toggleSound = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextSoundState = !soundOn;
+    video.muted = !nextSoundState;
+    setSoundOn(nextSoundState);
+    try {
+      if (video.paused) await video.play();
+    } catch {
+      video.muted = true;
+      setSoundOn(false);
+      void video.play().catch(() => undefined);
+    }
+  };
+
+  return (
+    <main>
+      <header className="siteHeader">
+        <a className="brand" href="#start" aria-label="DlaWas.fun, strona główna">
+          <img className="brandLogo" src="/logo-dlawas-fun-nav.png" alt="DlaWas.fun" />
+        </a>
+
+        <nav className="desktopNav" aria-label="Główna nawigacja">
+          <a href="#jak-to-dziala">Jak to działa</a>
+          <a href="#realizacje">Fotobudka 360</a>
+          <a href="#wiecej-o-nas">Więcej o nas</a>
+          <a href="#inne-atrakcje">Inne atrakcje</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+
+        <div className="headerSocials" aria-label="Kontakt i media społecznościowe">
+          <a href="tel:+48780059216" aria-label="Zadzwoń: 780 059 216" title="780 059 216">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 7.8 8.2 9.6c1.3 2.6 3.5 4.8 6.1 6.1l1.8-1.8 4.3 2.8c.4.3.6.8.5 1.3l-.5 2.2c-.1.5-.6.8-1.1.8C10.3 21 3 13.7 3 4.7c0-.5.3-1 .8-1.1L6 3.1c.5-.1 1 .1 1.2.4Z" /></svg>
+          </a>
+          <a className="emailShortcut" href="mailto:kontakt@dlawas.fun" aria-label="Napisz e-mail: kontakt@dlawas.fun" title="kontakt@dlawas.fun">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
+          </a>
+          <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Instagram DlaWas.fun" title="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle className="socialDot" cx="17.4" cy="6.7" r="1" /></svg>
+          </a>
+          <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer" aria-label="Facebook DlaWas.fun" title="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path className="socialFill" d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4Z" /></svg>
+          </a>
+          <a className="websiteShortcut" href="https://www.dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Otwórz stronę DlaWas.fun" title="dlawas.fun">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21M12 3C9.7 5.5 8.5 8.5 8.5 12s1.2 6.5 3.5 9" /></svg>
+          </a>
+        </div>
+      </header>
+
+      <section className="hero" aria-label="Fotobudka 360, film z realizacji">
+        <picture className="heroPoster" aria-hidden="true">
+          <source media="(max-width: 767px) and (orientation: portrait)" srcSet="/media/hero-poster-mobile.jpg" />
+          <img src="/media/hero-poster-desktop.jpg" alt="" />
+        </picture>
+
+        <video ref={videoRef} className="heroVideo" autoPlay muted loop playsInline preload="auto" aria-hidden="true">
+          <source media="(max-width: 767px) and (orientation: portrait)" src="/media/hero-mobile.mp4" type="video/mp4" />
+          <source src="/media/hero-desktop.mp4" type="video/mp4" />
+        </video>
+
+        <div className="heroShade" aria-hidden="true" />
+        <div className="heroGlow" aria-hidden="true" />
+        <div className="heroGrain" aria-hidden="true" />
+
+        <div className="heroContent" id="start">
+          <p className="eyebrow"><span /> Fotobudka 360° • Eventy • Wesela</p>
+          <h1>Twoja impreza<br /><em>W pełnym obrocie</em></h1>
+          <p className="heroLead">Dynamiczne klipy 360°, efektowne slow motion i gotowy film prosto na telefon jeszcze w trakcie imprezy.</p>
+          <div className="heroActions">
+            <a className="primaryButton" href="#kontakt">
+              <span>Zarezerwuj fotobudkę</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+            <a className="textButton" href="#jak-to-dziala">Zobacz, jak to działa</a>
+          </div>
+        </div>
+
+        <div className="heroMeta" aria-label="Najważniejsze informacje">
+          <div><strong>360°</strong><span>pełny obrót kamery</span></div>
+          <div><strong>SLOW</strong><span>efekt slow motion</span></div>
+          <div><strong>QR</strong><span>szybki odbiór filmu</span></div>
+        </div>
+
+        <button className="soundToggle" type="button" onClick={toggleSound} aria-pressed={soundOn} aria-label={soundOn ? "Wycisz muzykę" : "Włącz muzykę"}>
+          {soundOn ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="M17 9c1.4 1.5 1.4 4.5 0 6M19.5 6.5c3 3 3 8 0 11" /></svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="m17 10 5 5m0-5-5 5" /></svg>
+          )}
+          <span>{soundOn ? "Muzyka gra" : "Włącz muzykę"}</span>
+        </button>
+
+        <a className="scrollCue" href="#jak-to-dziala" aria-label="Przewiń niżej">
+          <span>Przewiń</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6" /></svg>
+        </a>
+      </section>
+
+      <section className="howItWorks" id="jak-to-dziala" aria-labelledby="how-heading">
+        <div className="howGlow" aria-hidden="true" />
+        <div className="sectionShell">
+          <div className="howIntro">
+            <div>
+              <p className="sectionKicker"><span>01</span> Jak to działa</p>
+              <h2 id="how-heading">Nie stoi z boku<br /><em>Rozkręca imprezę</em></h2>
+            </div>
+            <p className="howLead">Fotobudka 360° nie prosi gości o grzeczne ustawienie się do zdjęcia. Wciąga ich do środka akcji z muzyką, ruchem, światłem i efektem, który od razu chce się pokazać dalej.</p>
+          </div>
+
+          <div className="experienceGrid">
+            <figure className="experiencePhoto experiencePhotoMain">
+              <img src="/media/how-it-works/wedding.jpg" alt="Rozbawieni goście tańczący z parą młodą podczas wesela" loading="lazy" />
+              <figcaption><span>Wesele</span><strong>Moment, do którego ustawia się kolejka</strong></figcaption>
+            </figure>
+            <div className="experiencePitch">
+              <span className="pitchNumber">360°</span>
+              <h3>Każdy na chwilę staje się gwiazdą własnego klipu</h3>
+              <p>Wchodzicie na platformę, wybieracie najlepszą pozę albo robicie totalny freestyle. Ramię kamery płynnie okrąża grupę i łapie energię z każdej strony.</p>
+              <div className="pitchTags" aria-label="Rodzaje imprez">
+                <span>Wesela</span><span>18-stki</span><span>Studniówki</span><span>Eventy firmowe</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="stepsHeader">
+            <p className="sectionKicker"><span>02</span> Cztery proste kroki</p>
+            <p>Bez aplikacji, bez czekania na montaż, bez sztywnego pozowania.</p>
+          </div>
+
+          <div className="stepsGrid">
+            <article className="stepCard">
+              <div className="stepTop"><span className="stepIndex">01</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="8" r="4" /><path d="M9 27v-7a7 7 0 0 1 14 0v7M4 27h24" /></svg></div></div>
+              <h3>Wchodzicie</h3>
+              <p>Solo, we dwoje albo całą ekipą. Obsługa podpowiada, jak ustawić się na platformie i odpala ujęcie.</p>
+            </article>
+            <article className="stepCard">
+              <div className="stepTop"><span className="stepIndex">02</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" /><path d="M16 6V2M16 30v-4M6 16H2M30 16h-4M23 9l3-3M6 26l3-3" /><circle cx="16" cy="16" r="3" /></svg></div></div>
+              <h3>Kamera robi obrót</h3>
+              <p>Ramię zatacza pełne 360°, a wy tańczycie, śmiejecie się, rzucacie konfetti albo robicie efektowne przejście.</p>
+            </article>
+            <article className="stepCard">
+              <div className="stepTop"><span className="stepIndex">03</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m16 3 2.6 7.4L26 13l-7.4 2.6L16 23l-2.6-7.4L6 13l7.4-2.6L16 3Z" /><path d="m25 21 1.2 3.8L30 26l-3.8 1.2L25 31l-1.2-3.8L20 26l3.8-1.2L25 21Z" /></svg></div></div>
+              <h3>Dodajemy efekt</h3>
+              <p>Slow motion, dynamiczne tempo, muzyka i oprawa wydarzenia zamieniają zwykłe ujęcie w gotowy klip.</p>
+            </article>
+            <article className="stepCard stepCardAccent">
+              <div className="stepTop"><span className="stepIndex">04</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5zM19 5h8v8h-8zM5 19h8v8H5zM20 20h3v3h-3zM25 19h2v8h-8v-2" /></svg></div></div>
+              <h3>Skanujecie i macie</h3>
+              <p>Gotowy film trafia prosto na telefon. Można go zapisać, wysłać znajomym albo wrzucić do social mediów jeszcze na imprezie.</p>
+            </article>
+          </div>
+
+          <div className="partyProof" id="realizacje">
+            <div className="partyCollage" aria-label="Energia podczas imprezy">
+              <figure className="partyImage partyImageOne"><img src="/media/how-it-works/sparklers.jpg" alt="Przyjaciele świętujący wspólnie z zimnymi ogniami" loading="lazy" /></figure>
+              <figure className="partyVideo">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/party-loop-poster.jpg" aria-label="Krótki film z energetycznej imprezy">
+                  <source src="/media/how-it-works/party-loop.mp4" type="video/mp4" />
+                </video>
+              </figure>
+              <div className="orbitBadge" aria-hidden="true"><span>pełny obrót</span><b>360°</b></div>
+            </div>
+            <div className="partyCopy">
+              <p className="sectionKicker"><span>03</span> Dlaczego robi robotę</p>
+              <h2>Goście nie oglądają atrakcji<br /><em>Sami ją tworzą</em></h2>
+              <p>Najlepsze momenty zaczynają się wtedy, gdy ktoś rzuca: „chodźcie, robimy to razem”. Fotobudka przełamuje pierwsze lody, łączy różne grupy gości i daje naturalny powód, żeby wrócić po kolejny klip.</p>
+              <ul className="benefitList">
+                <li><span>01</span><div><strong>Wciąga od pierwszego obrotu</strong><p>Ruch platformy przyciąga wzrok i natychmiast budzi ciekawość.</p></div></li>
+                <li><span>02</span><div><strong>Łączy ludzi</strong><p>Rodzina, znajomi i współpracownicy szybko zamieniają się w jedną ekipę.</p></div></li>
+                <li><span>03</span><div><strong>Zostaje na dłużej</strong><p>Z imprezy zabieracie nie tylko wspomnienie, ale też krótkie filmy pełne emocji.</p></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="featureRail" aria-label="Co otrzymują goście">
+            <div><strong>360°</strong><span>pełny ruch kamery</span></div>
+            <div><strong>SLOW</strong><span>kinowy efekt zwolnienia</span></div>
+            <div><strong>QR</strong><span>film od razu na telefonie</span></div>
+            <div><strong>FUN</strong><span>obsługa, która rozkręca ekipę</span></div>
+          </div>
+
+          <div className="nightRhythm">
+            <div className="nightRhythmIntro">
+              <p className="sectionKicker"><span>04</span> Przez całą imprezę</p>
+              <h2>Im później,<br /><em>tym więcej odwagi</em></h2>
+              <p>Fotobudka żyje razem z wydarzeniem. Na początku przełamuje pierwsze lody, później przyciąga kolejne ekipy, a pod koniec zbiera najbardziej spontaniczne momenty wieczoru.</p>
+            </div>
+            <div className="rhythmTimeline">
+              <article>
+                <span className="rhythmTime">START</span>
+                <div className="rhythmLine"><i /></div>
+                <strong>Pierwsze wejścia</strong>
+                <p>Prowadzący i najbliżsi pokazują, jak to działa. Reszta gości już obserwuje i planuje własny klip.</p>
+              </article>
+              <article>
+                <span className="rhythmTime">PEAK</span>
+                <div className="rhythmLine"><i /></div>
+                <strong>Pełna kolejka</strong>
+                <p>Powstają większe ekipy, wspólne układy i coraz odważniejsze pomysły. Atrakcja napędza się sama.</p>
+              </article>
+              <article>
+                <span className="rhythmTime">FINAŁ</span>
+                <div className="rhythmLine"><i /></div>
+                <strong>Klipy jadą z gośćmi</strong>
+                <p>Każdy wychodzi z filmem na telefonie, gotowym do zapisania, wysłania i wrzucenia do sieci.</p>
+              </article>
+            </div>
+          </div>
+
+          <div className="offerIntro" id="wiecej-o-nas">
+            <p className="sectionKicker"><span>05</span> Więcej o nas</p>
+            <div className="offerIntroCopy">
+              <h2>Od pierwszego bitu<br /><em>do ostatniego światła</em></h2>
+              <p>DlaWas.fun to nie tylko fotobudka. Możecie wybrać pojedynczą usługę albo zbudować z nami pełną oprawę wydarzenia. Każdy element dopasowujemy do miejsca, liczby gości i charakteru imprezy.</p>
+            </div>
+          </div>
+
+          <div className="serviceGrid">
+            <article className="serviceCard serviceCardFeatured">
+              <div className="serviceMedia">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/wesela.jpg" aria-label="Goście bawiący się podczas wesela">
+                  <source src="/media/services/wesela.mp4" type="video/mp4" />
+                </video>
+                <div className="serviceMediaTop">
+                  <span className="serviceNumber">01</span>
+                  <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12.5" cy="18" r="6.5" /><circle cx="19.5" cy="18" r="6.5" /><path d="m16 3 1.1 3 3 1.1-3 1.1-1.1 3-1.1-3-3-1.1 3-1.1L16 3Z" /></svg></div>
+                </div>
+              </div>
+              <div className="serviceBody">
+                <h3>Wesela</h3>
+                <p>Dbamy o wyjątkową atmosferę dla Pary Młodej i wszystkich gości. Odpowiednio dobrana muzyka, dynamiczne prowadzenie oraz wyczucie parkietu pozwalają porwać do tańca nawet najbardziej opornych. Łączymy największe hity, klasyczne przeboje i nowoczesne brzmienia tak, aby każde pokolenie znalazło coś dla siebie.</p>
+                <a href="#kontakt">Zapytaj o termin <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+              </div>
+            </article>
+
+            <article className="serviceCard">
+              <div className="serviceMedia">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/eventy.jpg" aria-label="DJ prowadzący event dla pełnego parkietu">
+                  <source src="/media/services/eventy.mp4" type="video/mp4" />
+                </video>
+                <div className="serviceMediaTop">
+                  <span className="serviceNumber">02</span>
+                  <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26h22M8 26v-8h16v8M10 18l6-9 6 9" /><circle cx="7" cy="7" r="2" /><circle cx="25" cy="7" r="2" /><path d="m8.5 8.5 5 7M23.5 8.5l-5 7M16 4v5" /></svg></div>
+                </div>
+              </div>
+              <div className="serviceBody">
+                <h3>Eventy</h3>
+                <p>Tworzymy oprawę eventów firmowych, urodzin, jubileuszy i festiwali. Zapewniamy muzykę, profesjonalne nagłośnienie oraz efektowne oświetlenie dopasowane do charakteru wydarzenia. Prowadzimy imprezę tak, aby goście czuli się swobodnie i mieli naturalny powód, żeby wejść na parkiet.</p>
+                <a href="#kontakt">Zapytaj o termin <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+              </div>
+            </article>
+
+            <article className="serviceCard">
+              <div className="serviceMedia">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/naglosnienie.jpg" aria-label="Profesjonalna konsoleta DJ i sprzęt nagłośnieniowy">
+                  <source src="/media/services/naglosnienie.mp4" type="video/mp4" />
+                </video>
+                <div className="serviceMediaTop">
+                  <span className="serviceNumber">03</span>
+                  <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="8" y="3.5" width="16" height="25" rx="3" /><circle cx="16" cy="11" r="3" /><circle cx="16" cy="21" r="5" /><path d="M4.5 10c-2 3.5-2 8.5 0 12M27.5 10c2 3.5 2 8.5 0 12" /></svg></div>
+                </div>
+              </div>
+              <div className="serviceBody">
+                <h3>Nagłośnienie</h3>
+                <p>Czysty i równomierny dźwięk dopasowujemy do przestrzeni oraz liczby uczestników. Profesjonalny sprzęt i właściwa konfiguracja ograniczają zakłócenia, pogłos oraz martwe strefy. Obsługujemy zarówno eleganckie wesela i eventy firmowe, jak również występy, prezentacje i spektakle.</p>
+                <a href="#kontakt">Zapytaj o termin <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+              </div>
+            </article>
+
+            <article className="serviceCard serviceCardColor">
+              <div className="serviceMedia">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/animacje.jpg" aria-label="Dynamiczna zabawa i taniec podczas imprezy">
+                  <source src="/media/services/animacje.mp4" type="video/mp4" />
+                </video>
+                <div className="serviceMediaTop">
+                  <span className="serviceNumber">04</span>
+                  <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="14" cy="7" r="3" /><path d="m14 11-4 5 5 3-2 9M14 12l5 4 5-3M16 19l5 8" /><path d="m25 4 .8 2.2L28 7l-2.2.8L25 10l-.8-2.2L22 7l2.2-.8L25 4ZM6 20l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z" /></svg></div>
+                </div>
+              </div>
+              <div className="serviceBody">
+                <h3>Animacje</h3>
+                <p>Łączymy ruch, muzykę i interakcję w aktywności dla dzieci oraz dorosłych. Gry, tańce, zabawy tematyczne i wspólne sekwencje pomagają przełamać pierwsze lody i angażują całe grupy. Program dopasowujemy do wieku uczestników, tempa wydarzenia oraz dostępnej przestrzeni.</p>
+                <a href="#kontakt">Zapytaj o termin <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+              </div>
+            </article>
+          </div>
+
+          <div className="attractionsIntro" id="inne-atrakcje">
+            <p className="sectionKicker"><span>06</span> Inne atrakcje</p>
+            <div className="attractionsIntroCopy">
+              <h2>Jeszcze więcej emocji<br /><em>W jednym wydarzeniu</em></h2>
+              <p>Do muzyki i fotobudki możecie dobrać dodatki, które budują klimat od ceremonii aż po finał imprezy. Łączymy je w spójną oprawę, żeby każdy moment miał własny efekt wow.</p>
+            </div>
+          </div>
+
+          <div className="attractionsGrid">
+            <article className="attractionCard attractionCardWide">
+              <div className="attractionMedia">
+                <img src="/media/attractions/ceremonia.webp" alt="Skrzypaczka zapewniająca muzyczną oprawę ceremonii ślubnej" loading="lazy" />
+                <span className="attractionIndex">01</span>
+                <div className="attractionIcon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M24 6v20.5a6 6 0 1 1-3-5.2V10l13-3v14.5a6 6 0 1 1-3-5.2V5.4L24 7" /><path d="M8 10c3-2.4 6-3.4 9-3M9 15c2.5-1.8 5-2.5 8-2.3" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Ceremonia</span>
+                <h3>Oprawa muzyczna</h3>
+                <p>Śpiew i skrzypce nadają ceremonii osobisty, wzruszający charakter. Repertuar dobieramy do Was i miejsca uroczystości, zarówno w kościele, plenerze, jak i podczas ślubu cywilnego.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard">
+              <div className="attractionMedia">
+                <img src="/media/attractions/iskry.webp" alt="Para Młoda tańcząca pomiędzy fontannami zimnych iskier" loading="lazy" />
+                <span className="attractionIndex">02</span>
+                <div className="attractionIcon attractionIconSpark" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M20 4v10M20 26v10M4 20h10M26 20h10M8.7 8.7l7.1 7.1M24.2 24.2l7.1 7.1M31.3 8.7l-7.1 7.1M15.8 24.2l-7.1 7.1" /><circle cx="20" cy="20" r="4" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Efekt wow</span>
+                <h3>Fontanna iskier</h3>
+                <p>Spektakularna oprawa pierwszego tańca, wejścia lub kulminacyjnego momentu. Zimne iskry dają widowiskowy efekt na żywo i świetnie wyglądają na filmach.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard">
+              <div className="attractionMedia">
+                <img src="/media/attractions/swiatlo.webp" alt="Oświetlony parkiet i sala podczas przyjęcia weselnego" loading="lazy" />
+                <span className="attractionIndex">03</span>
+                <div className="attractionIcon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M8 31h24M12 31l5-18h6l5 18M15 20h10M7 9l7 5M33 9l-7 5M20 3v7" /><path d="M11 35h18" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Klimat</span>
+                <h3>Dekoracja światłem</h3>
+                <p>Kolorem i światłem podkreślamy architekturę sali, strefę Pary Młodej oraz parkiet. Całość dopasowujemy do motywu przewodniego i rytmu imprezy.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard">
+              <div className="attractionMedia">
+                <img src="/media/attractions/dym.webp" alt="Pierwszy taniec Pary Młodej w chmurach ciężkiego dymu" loading="lazy" />
+                <span className="attractionIndex">04</span>
+                <div className="attractionIcon attractionIconCloud" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M10 27h19a6 6 0 0 0 .5-12A10 10 0 0 0 10.8 18 4.5 4.5 0 0 0 10 27Z" /><path d="M7 32h26M12 36h18" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Pierwszy taniec</span>
+                <h3>Ciężki dym</h3>
+                <p>Gęsta chmura utrzymuje się nisko nad parkietem i tworzy efekt tańca w obłokach. To eleganckie tło dla pierwszego tańca oraz wyjątkowych ujęć.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard">
+              <div className="attractionMedia">
+                <img src="/media/attractions/akordeon.webp" alt="Akordeonista grający podczas przyjęcia" loading="lazy" />
+                <span className="attractionIndex">05</span>
+                <div className="attractionIcon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M6 10h8v20H6zM26 10h8v20h-8zM14 12l12-2v20l-12-2zM17 14v12M20 13v14M23 12v16" /><circle cx="10" cy="15" r="1" /><circle cx="10" cy="20" r="1" /><circle cx="10" cy="25" r="1" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Na żywo</span>
+                <h3>Akordeonista</h3>
+                <p>Energia muzyki na żywo szybko łączy gości przy stołach i na parkiecie. Akordeon sprawdza się podczas wesela, poprawin i luźniejszej biesiady.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard">
+              <div className="attractionMedia">
+                <img src="/media/attractions/love.webp" alt="Podświetlany napis LOVE na czarnym tle" loading="lazy" />
+                <span className="attractionIndex">06</span>
+                <div className="attractionIcon attractionIconHeart" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M20 33S7 25 7 15.5C7 9.8 14.2 7 20 13c5.8-6 13-3.2 13 2.5C33 25 20 33 20 33Z" /><path d="m17 16 3 3 4-5" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Dekoracja</span>
+                <h3>Napis LOVE</h3>
+                <p>Świetlny napis staje się mocnym punktem sali i naturalnym tłem do zdjęć. Dodaje ciepła aranżacji i jest widoczny przez całe przyjęcie.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article className="attractionCard attractionCardWide attractionCardFinal">
+              <div className="attractionMedia">
+                <img src="/media/attractions/rolki.webp" alt="Twórczyni nagrywająca krótki film telefonem" loading="lazy" />
+                <span className="attractionIndex">07</span>
+                <div className="attractionIcon attractionIconPlay" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="5" /><path d="m17 15 9 5-9 5V15ZM11 4v4M20 4v4M29 4v4" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Social media</span>
+                <h3>Video i rolki</h3>
+                <p>Łapiemy spontaniczne momenty i składamy je w krótkie, dynamiczne materiały gotowe do publikacji. Otrzymujecie wspomnienia w formacie, który chce się od razu udostępnić.</p>
+                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          </div>
+
+          <div className="attractionsOutro">
+            <div><span>7</span><p>dodatków, z których ułożymy Wasz zestaw</p></div>
+            <p>Nie musicie wybierać w ciemno. Powiedzcie nam, gdzie i dla ilu osób organizujecie wydarzenie, a podpowiemy atrakcje, które najlepiej zagrają razem.</p>
+            <a className="primaryButton" href="#kontakt"><span>Ułóżmy Wasz pakiet</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+          </div>
+
+          <section className="contactSection" id="kontakt" aria-labelledby="contact-heading">
+            <div className="contactGlow" aria-hidden="true" />
+            <div className="contactIntro">
+              <p className="sectionKicker"><span>07</span> Kontakt</p>
+              <h2 id="contact-heading">Zróbmy imprezę<br /><em>o której będzie głośno</em></h2>
+              <p>Powiedzcie nam, co planujecie. Dobierzemy fotobudkę, muzykę i dodatki do miejsca, liczby gości oraz charakteru wydarzenia.</p>
+            </div>
+
+            <div className="contactGrid">
+              <div className="contactMain">
+                <p className="contactStatus"><i /> Jesteśmy dostępni, zapytajcie o swój termin</p>
+                <div className="contactLinks">
+                  <a href="tel:+48780059216" aria-label="Zadzwoń pod numer 780 059 216">
+                    <span><small>Telefon</small><strong>780 059 216</strong></span>
+                    <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
+                  </a>
+                  <a href="mailto:kontakt@dlawas.fun" aria-label="Napisz na kontakt@dlawas.fun">
+                    <span><small>E-mail</small><strong>kontakt@dlawas.fun</strong></span>
+                    <i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
+                  </a>
+                </div>
+                <div className="contactSocials" aria-label="DlaWas.fun w internecie">
+                  <span>Znajdźcie nas</span>
+                  <div>
+                    <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer">Instagram <b>↗</b></a>
+                    <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer">Facebook <b>↗</b></a>
+                    <a href="https://www.dlawas.fun/" target="_blank" rel="noreferrer">dlawas.fun <b>↗</b></a>
+                  </div>
+                </div>
+              </div>
+
+              <aside className="contactBrief" aria-label="Co podać w wiadomości">
+                <div className="contactBriefIcon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M12 5h16a4 4 0 0 1 4 4v22a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z" /><path d="M14 3v5M26 3v5M8 13h24M14 20h5M14 26h12" /><circle cx="27" cy="20" r="1" /></svg>
+                </div>
+                <p className="contactBriefLabel">Żeby szybko sprawdzić ofertę</p>
+                <h3>Napiszcie nam trzy rzeczy</h3>
+                <ol>
+                  <li><span>01</span><p><strong>Termin</strong>Data wydarzenia</p></li>
+                  <li><span>02</span><p><strong>Miejsce</strong>Miasto lub nazwa sali</p></li>
+                  <li><span>03</span><p><strong>Plan imprezy</strong>Rodzaj wydarzenia i wybrane atrakcje</p></li>
+                </ol>
+                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20DlaWas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0AWybrane%20atrakcje%3A" className="primaryButton contactWrite">
+                  <span>Napisz wiadomość</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                </a>
+              </aside>
+            </div>
+
+            <footer className="siteFooter">
+              <a href="#start" aria-label="Wróć na początek"><img src="/logo-dlawas-fun-nav.png" alt="DlaWas.fun" /></a>
+              <p>DJ • Fotobudka 360° • Oprawa wydarzeń</p>
+              <div><span>© 2026 DlaWas.fun</span><a href="#start">Wróć na górę ↑</a></div>
+            </footer>
+          </section>
+        </div>
+      </section>
+    </main>
+  );
+}

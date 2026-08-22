@@ -92,17 +92,29 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .stepsHeader .sectionKicker { margin: 0; }
 .stepsHeader > p:last-child { margin: 0; color: rgba(255,255,255,.47); font-size: 13px; }
 .stepsGrid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 14px; }
-.stepCard { position: relative; min-height: 338px; overflow: hidden; padding: 28px 27px 30px; border: 1px solid rgba(255,255,255,.12); border-radius: 24px; background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); box-shadow: 0 18px 55px rgba(0,0,0,.14); transition: border-color 220ms ease, background 220ms ease, transform 220ms ease; }
+.stepCard { --step-accent: var(--lime); --step-accent-rgb: 217,255,67; position: relative; min-height: 356px; overflow: hidden; padding: 28px 27px 30px; border: 1px solid rgba(255,255,255,.12); border-radius: 24px; background: radial-gradient(circle at 86% 13%,rgba(var(--step-accent-rgb),.105),transparent 27%),linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.012)); box-shadow: 0 18px 55px rgba(0,0,0,.14); transition: border-color 220ms ease, background 220ms ease, transform 220ms ease; }
+.stepCard:nth-child(2) { --step-accent: #cbb6ff; --step-accent-rgb: 203,182,255; }
+.stepCard:nth-child(3) { --step-accent: #ff65bd; --step-accent-rgb: 255,101,189; }
+.stepCard:nth-child(4) { --step-accent: #e4ff73; --step-accent-rgb: 228,255,115; }
 .stepCard::before { content: ""; position: absolute; top: 0; left: 26px; width: 52px; height: 3px; border-radius: 0 0 9px 9px; background: linear-gradient(90deg,var(--lime),var(--pink)); box-shadow: 0 0 24px rgba(217,255,67,.35); }
 .stepCard::after { content: ""; position: absolute; right: -75px; bottom: -90px; width: 190px; height: 190px; border: 1px solid rgba(255,255,255,.05); border-radius: 50%; box-shadow: inset 0 0 0 32px rgba(255,255,255,.012), inset 0 0 0 64px rgba(255,255,255,.01); pointer-events: none; }
-.stepCard:hover { border-color: rgba(217,255,67,.32); background: linear-gradient(145deg, rgba(217,255,67,.07), rgba(255,255,255,.018)); transform: translateY(-5px); }
+.stepCard:hover { border-color: rgba(var(--step-accent-rgb),.44); background: radial-gradient(circle at 86% 13%,rgba(var(--step-accent-rgb),.16),transparent 29%),linear-gradient(145deg,rgba(255,255,255,.058),rgba(255,255,255,.018)); transform: translateY(-5px); }
 .stepCardAccent { border-color: rgba(217,255,67,.3); background: linear-gradient(150deg, rgba(217,255,67,.16), rgba(143,85,255,.08) 62%, rgba(255,255,255,.018)); }
 .stepTop { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; }
 .stepIndex { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; color: rgba(255,255,255,.58); background: rgba(255,255,255,.025); font-size: 10px; font-weight: 900; letter-spacing: .1em; }
-.stepIcon { display: grid; width: 56px; height: 56px; place-items: center; border: 1px solid rgba(217,255,67,.45); border-radius: 18px; color: var(--lime); background: rgba(217,255,67,.055); box-shadow: inset 0 0 25px rgba(217,255,67,.035); transform: rotate(3deg); }
-.stepIcon svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
-.stepCard h3 { position: relative; z-index: 1; margin: 76px 0 0; font-size: clamp(20px,1.7vw,26px); line-height: 1.02; letter-spacing: -.04em; text-transform: uppercase; }
+.stepIcon { position: relative; display: grid; width: 78px; height: 78px; place-items: center; isolation: isolate; overflow: hidden; border: 1px solid rgba(var(--step-accent-rgb),.66); border-radius: 26px; color: var(--step-accent); background: radial-gradient(circle at 32% 22%,rgba(255,255,255,.15),transparent 30%),linear-gradient(145deg,rgba(var(--step-accent-rgb),.14),rgba(8,7,12,.86)); box-shadow: 0 16px 38px rgba(0,0,0,.32),inset 0 0 30px rgba(var(--step-accent-rgb),.07),0 0 0 6px rgba(var(--step-accent-rgb),.035); transform: rotate(3deg); }
+.stepIcon::before { content: ""; position: absolute; z-index: -1; inset: -45%; background: conic-gradient(from 120deg,transparent 0 65%,rgba(var(--step-accent-rgb),.22),transparent 84%); animation: stepIconShine 8s linear infinite; }
+.stepIcon::after { content: ""; position: absolute; inset: 7px; border: 1px dashed rgba(255,255,255,.13); border-radius: 20px; }
+.stepIcon svg { position: relative; z-index: 1; width: 48px; height: 48px; overflow: visible; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 9px rgba(var(--step-accent-rgb),.22)); }
+.stepIcon .stepIconGhost { stroke: rgba(255,255,255,.33); }
+.stepIcon .stepIconAccent { stroke: #ff59b3; filter: drop-shadow(0 0 5px rgba(255,47,168,.55)); }
+.stepIcon .stepIconSoftFill { fill: rgba(var(--step-accent-rgb),.18); stroke: currentColor; }
+.stepIcon .stepIconSolid { fill: currentColor; stroke: none; }
+.stepIcon .stepIconDash { stroke-dasharray: 3 4; }
+.stepIconOrbit { transform-origin: 32px 32px; }
+.stepCard h3 { position: relative; z-index: 1; margin: 62px 0 0; font-size: clamp(20px,1.7vw,26px); line-height: 1.02; letter-spacing: -.04em; text-transform: uppercase; }
 .stepCard p { position: relative; z-index: 1; margin: 15px 0 0; color: rgba(255,255,255,.58); font-size: 13px; line-height: 1.62; }
+@keyframes stepIconShine { to { transform: rotate(360deg); } }
 
 .partyProof { display: grid; grid-template-columns: minmax(0,1fr) minmax(400px,.88fr); align-items: center; gap: clamp(65px,8vw,130px); margin-top: 135px; }
 .partyCollage { position: relative; min-height: 700px; }
@@ -157,6 +169,30 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .attractionsIntro h2 { font-size: clamp(44px,5.2vw,78px); }
 .attractionsIntroCopy > p { max-width: 580px; margin: 0 0 5px; color: rgba(255,255,255,.6); font-size: 16px; line-height: 1.65; }
 .attractionsGrid { display: grid; grid-template-columns: repeat(12,minmax(0,1fr)); gap: 16px; margin-top: 43px; }
+.musicAttraction { grid-column: 1 / -1; overflow: hidden; border: 1px solid rgba(217,255,67,.2); border-radius: 28px; background: radial-gradient(circle at 15% 12%,rgba(217,255,67,.055),transparent 25%),linear-gradient(145deg,rgba(143,85,255,.08),rgba(255,255,255,.016)); box-shadow: 0 30px 90px rgba(0,0,0,.26); }
+.musicAttractionHero { position: relative; min-height: 570px; overflow: hidden; isolation: isolate; }
+.musicAttractionHero::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(90deg,rgba(5,4,9,.94) 0%,rgba(5,4,9,.72) 39%,rgba(5,4,9,.18) 72%),linear-gradient(180deg,rgba(5,4,9,.08),rgba(5,4,9,.72)); }
+.musicAttractionHero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 900ms cubic-bezier(.2,.7,.2,1),filter 600ms ease; }
+.musicAttraction:hover .musicAttractionHero > img { filter: saturate(1.08) contrast(1.03); transform: scale(1.035); }
+.musicAttractionHero .attractionIcon { z-index: 3; }
+.attractionIconMusic { color: #ffd85e; border-color: rgba(255,216,94,.72); }
+.attractionIconSax { color: #ff8fdd; border-color: rgba(255,101,189,.7); }
+.musicAttractionCopy { position: absolute; z-index: 2; left: clamp(32px,5vw,74px); bottom: clamp(38px,5vw,72px); max-width: 590px; }
+.musicAttractionCopy h3 { margin: 13px 0 0; font-size: clamp(46px,6vw,82px); line-height: .88; letter-spacing: -.065em; text-transform: uppercase; }
+.musicAttractionCopy p { max-width: 540px; margin: 24px 0 31px; color: rgba(255,255,255,.72); font-size: 15px; line-height: 1.68; }
+.musicAttractionCopy a { display: inline-flex; align-items: center; gap: 9px; color: #fff; font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+.musicAttractionCopy a > span { display: grid; width: 29px; height: 29px; place-items: center; border: 1px solid rgba(217,255,67,.48); border-radius: 50%; color: var(--lime); transition: transform 180ms ease,background 180ms ease; }
+.musicAttractionCopy a:hover > span,.musicAttractionCopy a:focus-visible > span { background: rgba(217,255,67,.1); transform: translate(2px,-2px); }
+.musicTeam { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; padding-top: 1px; background: rgba(255,255,255,.1); }
+.musicPerson { min-width: 0; background: #0d0a13; }
+.musicPersonPhoto { position: relative; min-height: 290px; overflow: hidden; background: #15111d; }
+.musicPersonPhoto::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg,transparent 48%,rgba(8,6,11,.92)); }
+.musicPersonPhoto img { object-fit: cover; object-position: center 24%; transition: transform 700ms cubic-bezier(.2,.7,.2,1),filter 450ms ease; }
+.musicPerson:hover .musicPersonPhoto img { filter: saturate(1.08); transform: scale(1.045); }
+.musicPersonCopy { min-height: 245px; padding: 27px 27px 32px; }
+.musicPersonCopy > span { color: var(--lime); font-size: 8px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+.musicPersonCopy h4 { margin: 10px 0 0; font-size: 27px; line-height: 1; letter-spacing: -.045em; text-transform: uppercase; }
+.musicPersonCopy p { margin: 16px 0 0; color: rgba(255,255,255,.57); font-size: 12px; line-height: 1.62; }
 .attractionCard { position: relative; grid-column: span 4; display: flex; min-width: 0; min-height: 570px; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 27px; background: linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)); box-shadow: 0 22px 65px rgba(0,0,0,.2); transition: transform 260ms cubic-bezier(.2,.7,.2,1), border-color 260ms ease, box-shadow 260ms ease; }
 .attractionCardWide { grid-column: span 8; display: grid; grid-template-columns: minmax(0,1.08fr) minmax(300px,.92fr); min-height: 470px; }
 .attractionCardFinal { background: linear-gradient(135deg,rgba(143,85,255,.12),rgba(255,47,168,.055) 55%,rgba(217,255,67,.035)); }
@@ -282,6 +318,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .attractionsIntroCopy { display: grid; gap: 28px; }
   .attractionsIntroCopy > p { max-width: 720px; }
   .attractionsGrid { grid-template-columns: repeat(6,minmax(0,1fr)); }
+  .musicAttraction { grid-column: 1 / -1; }
+  .musicTeam { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .musicPersonPhoto { min-height: 330px; }
   .attractionCard { grid-column: span 3; }
   .attractionCardWide { grid-column: span 6; }
   .attractionsOutro { grid-template-columns: 1fr 1fr; }
@@ -347,9 +386,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .stepCard::before { left: 21px; }
   .stepCard:hover { transform: none; }
   .stepIndex { width: 38px; height: 38px; }
-  .stepIcon { width: 50px; height: 50px; border-radius: 16px; }
-  .stepIcon svg { width: 24px; height: 24px; }
-  .stepCard h3 { margin-top: 34px; font-size: 23px; }
+  .stepIcon { width: 64px; height: 64px; border-radius: 21px; }
+  .stepIcon::after { inset: 6px; border-radius: 16px; }
+  .stepIcon svg { width: 40px; height: 40px; }
+  .stepCard h3 { margin-top: 37px; font-size: 23px; }
   .stepCard p { margin-top: 12px; font-size: 14px; line-height: 1.58; }
   .partyProof { gap: 76px; margin-top: 92px; }
   .partyCollage { min-height: 510px; }
@@ -379,6 +419,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .attractionsIntroCopy { gap: 23px; }
   .attractionsIntroCopy > p { font-size: 14px; line-height: 1.62; }
   .attractionsGrid { grid-template-columns: 1fr; gap: 12px; margin-top: 30px; }
+  .musicAttraction { grid-column: auto; border-radius: 21px; }
+  .musicAttractionHero { min-height: 520px; }
+  .musicAttractionHero::after { background: linear-gradient(180deg,rgba(5,4,9,.12) 10%,rgba(5,4,9,.92) 75%,rgba(5,4,9,.98)); }
+  .musicAttractionHero > img { object-position: 58% center; }
+  .musicAttractionCopy { left: 22px; right: 22px; bottom: 31px; }
+  .musicAttractionCopy h3 { font-size: clamp(42px,13vw,58px); }
+  .musicAttractionCopy p { margin: 19px 0 26px; font-size: 14px; line-height: 1.58; }
+  .musicTeam { grid-template-columns: 1fr; }
+  .musicPerson { display: grid; grid-template-columns: 124px minmax(0,1fr); }
+  .musicPersonPhoto { min-height: 230px; }
+  .musicPersonCopy { min-height: 0; padding: 24px 19px 26px; }
+  .musicPersonCopy h4 { font-size: 24px; }
+  .musicPersonCopy p { margin-top: 13px; font-size: 11px; line-height: 1.55; }
   .attractionCard, .attractionCardWide { grid-column: auto; display: flex; min-height: 0; border-radius: 21px; }
   .attractionCard:hover { transform: none; }
   .attractionMedia, .attractionCardWide .attractionMedia { min-height: 235px; }
@@ -436,5 +489,5 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .heroGlow, .scrollCue svg, .orbitBadge::before, .attractionIcon, .attractionIcon::after, .attractionCard:hover .attractionMedia::before, .contactStatus i { animation: none; }
+  .heroGlow, .scrollCue svg, .orbitBadge::before, .attractionIcon, .attractionIcon::after, .attractionCard:hover .attractionMedia::before, .contactStatus i, .stepIcon::before { animation: none; }
 }

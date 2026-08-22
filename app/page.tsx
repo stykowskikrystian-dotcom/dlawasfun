@@ -1,6 +1,30 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+
+const musicTeam = [
+  {
+    name: "Paweł",
+    image: "/media/attractions/team/pawel.webp",
+    description: "DJ i wodzirej z pasją. Czerpie energię od ludzi i sam zaraża nią innych. Animator zabaw obecny w branży weselnej i eventowej od 2007 roku.",
+  },
+  {
+    name: "Kamil",
+    image: "/media/attractions/team/kamil.webp",
+    description: "DJ oraz technik światła i dźwięku. Od 2010 roku rozwija swoją pasję i umiejętności, dbając o to, żeby wszystko świetnie brzmiało i błyszczało.",
+  },
+  {
+    name: "Michał",
+    image: "/media/attractions/team/michal.webp",
+    description: "DJ i wodzirej z 14-letnim doświadczeniem. Charyzmatyczny, pełen energii i pomysłowości, łączy poczucie humoru z profesjonalizmem.",
+  },
+  {
+    name: "Krzysztof",
+    image: "/media/attractions/team/krzysztof.webp",
+    description: "DJ i wodzirej tworzący innowacyjny styl imprez od 2013 roku. Charyzmą, energią i doborem repertuaru buduje niezapomniane wspomnienia.",
+  },
+] as const;
 
 function ArrowUpRightIcon() {
   return (
@@ -14,6 +38,64 @@ function ArrowUpIcon() {
   return (
     <svg className="inlineArrowIcon" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 19V5M6 11l6-6 6 6" />
+    </svg>
+  );
+}
+
+function StepSceneIcon({ type }: { type: "enter" | "orbit" | "effect" | "delivery" }) {
+  if (type === "enter") {
+    return (
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <ellipse className="stepIconGhost" cx="32" cy="51" rx="22" ry="7" />
+        <path className="stepIconAccent" d="M12 51c4.5 4.7 12 7 20 7s15.5-2.3 20-7" />
+        <circle className="stepIconSoftFill" cx="32" cy="24" r="5" />
+        <path d="M23 44v-8.5a9 9 0 0 1 18 0V44M18 45h28" />
+        <circle className="stepIconGhost" cx="18" cy="29" r="3.5" />
+        <circle className="stepIconGhost" cx="46" cy="29" r="3.5" />
+        <path className="stepIconGhost" d="M12 43v-5a6 6 0 0 1 9-5.2M52 43v-5a6 6 0 0 0-9-5.2" />
+        <path className="stepIconAccent" d="m27 14 5-5 5 5M32 9v9" />
+      </svg>
+    );
+  }
+
+  if (type === "orbit") {
+    return (
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <g className="stepIconOrbit">
+          <path className="stepIconGhost stepIconDash" d="M11 32a21 21 0 1 1 7 15.7" />
+          <path className="stepIconAccent" d="m12 43 6 5-1-8" />
+        </g>
+        <ellipse cx="32" cy="46" rx="14" ry="4.5" />
+        <circle className="stepIconSoftFill" cx="32" cy="31" r="5" />
+        <path d="M25 42v-5a7 7 0 0 1 14 0v5" />
+        <path className="stepIconAccent" d="M46 13v13M46 13l8 4v8l-8 3M43 13h6" />
+        <circle className="stepIconSolid" cx="46" cy="31" r="2" />
+      </svg>
+    );
+  }
+
+  if (type === "effect") {
+    return (
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="11" y="17" width="42" height="32" rx="7" />
+        <path className="stepIconGhost" d="M11 26h42M21 17v9M43 17v9" />
+        <path d="M19 41h8M31 41h14" />
+        <circle className="stepIconSoftFill" cx="31" cy="41" r="3" />
+        <path className="stepIconAccent" d="m40 7 2.2 6.1L48 15l-5.8 1.9L40 23l-2.2-6.1L32 15l5.8-1.9L40 7Z" />
+        <path className="stepIconAccent" d="m52 29 1.2 3.3 3.3 1.2-3.3 1.2L52 38l-1.2-3.3-3.3-1.2 3.3-1.2L52 29Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="18" y="8" width="28" height="48" rx="7" />
+      <path className="stepIconGhost" d="M27 13h10M28 51h8" />
+      <path d="M24 21h6v6h-6zM35 21h5v5h-5zM24 32h5v5h-5zM35 32h5v6h-6v-3" />
+      <path className="stepIconAccent stepScanLine" d="M14 30h36" />
+      <circle className="stepIconSoftFill" cx="48" cy="46" r="9" />
+      <path className="stepIconAccent" d="m44 46 3 3 5-6" />
+      <path className="stepIconGhost" d="M10 24v-5a5 5 0 0 1 5-5h2M54 24v-5a5 5 0 0 0-5-5h-2" />
     </svg>
   );
 }
@@ -101,7 +183,7 @@ export default function Home() {
       </header>
 
       <section className="hero" aria-label="Fotobudka 360, film z realizacji">
-        <picture className="heroPoster" aria-hidden="true">
+        <picture className="heroPoster">
           <source media="(max-width: 767px) and (orientation: portrait)" srcSet="/media/hero-poster-mobile.jpg" />
           <img src="/media/hero-poster-desktop.jpg" alt="" />
         </picture>
@@ -184,22 +266,22 @@ export default function Home() {
 
           <div className="stepsGrid">
             <article className="stepCard">
-              <div className="stepTop"><span className="stepIndex">01</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="8" r="4" /><path d="M9 27v-7a7 7 0 0 1 14 0v7M4 27h24" /></svg></div></div>
+              <div className="stepTop"><span className="stepIndex">01</span><div className="stepIcon"><StepSceneIcon type="enter" /></div></div>
               <h3>Wchodzicie</h3>
               <p>Solo, we dwoje albo całą ekipą. Obsługa podpowiada, jak ustawić się na platformie i odpala ujęcie.</p>
             </article>
             <article className="stepCard">
-              <div className="stepTop"><span className="stepIndex">02</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" /><path d="M16 6V2M16 30v-4M6 16H2M30 16h-4M23 9l3-3M6 26l3-3" /><circle cx="16" cy="16" r="3" /></svg></div></div>
+              <div className="stepTop"><span className="stepIndex">02</span><div className="stepIcon"><StepSceneIcon type="orbit" /></div></div>
               <h3>Kamera robi obrót</h3>
               <p>Ramię zatacza pełne 360°, a wy tańczycie, śmiejecie się, rzucacie konfetti albo robicie efektowne przejście.</p>
             </article>
             <article className="stepCard">
-              <div className="stepTop"><span className="stepIndex">03</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m16 3 2.6 7.4L26 13l-7.4 2.6L16 23l-2.6-7.4L6 13l7.4-2.6L16 3Z" /><path d="m25 21 1.2 3.8L30 26l-3.8 1.2L25 31l-1.2-3.8L20 26l3.8-1.2L25 21Z" /></svg></div></div>
+              <div className="stepTop"><span className="stepIndex">03</span><div className="stepIcon"><StepSceneIcon type="effect" /></div></div>
               <h3>Dodajemy efekt</h3>
               <p>Slow motion, dynamiczne tempo, muzyka i oprawa wydarzenia zamieniają zwykłe ujęcie w gotowy klip.</p>
             </article>
             <article className="stepCard stepCardAccent">
-              <div className="stepTop"><span className="stepIndex">04</span><div className="stepIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 5h8v8H5zM19 5h8v8h-8zM5 19h8v8H5zM20 20h3v3h-3zM25 19h2v8h-8v-2" /></svg></div></div>
+              <div className="stepTop"><span className="stepIndex">04</span><div className="stepIcon"><StepSceneIcon type="delivery" /></div></div>
               <h3>Skanujecie i macie</h3>
               <p>Gotowy film trafia prosto na telefon. Można go zapisać, wysłać znajomym albo wrzucić do social mediów jeszcze na imprezie.</p>
             </article>
@@ -321,19 +403,34 @@ export default function Home() {
           </div>
 
           <div className="attractionsGrid">
-            <article className="attractionCard attractionCardWide">
-              <div className="attractionMedia">
-                <img src="/media/attractions/ceremonia.webp" alt="Skrzypaczka zapewniająca muzyczną oprawę ceremonii ślubnej" loading="lazy" />
+            <article className="musicAttraction">
+              <div className="musicAttractionHero">
+                <img src="/media/attractions/oprawa-muzyczna.webp" alt="DJ pracujący przy profesjonalnej konsolecie" loading="lazy" />
                 <span className="attractionIndex">01</span>
-                <div className="attractionIcon" aria-hidden="true">
-                  <svg viewBox="0 0 40 40"><path d="M24 6v20.5a6 6 0 1 1-3-5.2V10l13-3v14.5a6 6 0 1 1-3-5.2V5.4L24 7" /><path d="M8 10c3-2.4 6-3.4 9-3M9 15c2.5-1.8 5-2.5 8-2.3" /></svg>
+                <div className="attractionIcon attractionIconMusic" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M7 25V15M12 30V10M17 27V13M22 34V6M27 28V12M32 24V16" /><path d="M5 34h30M5 6h30" /></svg>
+                </div>
+                <div className="musicAttractionCopy">
+                  <span className="attractionLabel">DJ-e i wodzireje</span>
+                  <h3>Oprawa muzyczna</h3>
+                  <p>DlaWas.fun zapewnia kompleksową obsługę muzyczną wesel i eventów. Doświadczenie, wyczucie parkietu oraz światło i dźwięk dopasowane do miejsca budują energię od pierwszego utworu do finału.</p>
+                  <a href="#kontakt">Zapytaj o oprawę <span><ArrowUpRightIcon /></span></a>
                 </div>
               </div>
-              <div className="attractionBody">
-                <span className="attractionLabel">Ceremonia</span>
-                <h3>Oprawa muzyczna</h3>
-                <p>Śpiew i skrzypce nadają ceremonii osobisty, wzruszający charakter. Repertuar dobieramy do Was i miejsca uroczystości, zarówno w kościele, plenerze, jak i podczas ślubu cywilnego.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+
+              <div className="musicTeam" aria-label="DJ-e i wodzireje DlaWas.fun">
+                {musicTeam.map((person) => (
+                  <article className="musicPerson" key={person.name}>
+                    <div className="musicPersonPhoto">
+                      <Image src={person.image} alt={`${person.name} — DJ i wodzirej DlaWas.fun`} fill sizes="(max-width: 767px) 42vw, (max-width: 1200px) 22vw, 260px" />
+                    </div>
+                    <div className="musicPersonCopy">
+                      <span>Oprawa muzyczna</span>
+                      <h4>{person.name}</h4>
+                      <p>{person.description}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
             </article>
 
@@ -387,16 +484,16 @@ export default function Home() {
 
             <article className="attractionCard">
               <div className="attractionMedia">
-                <img src="/media/attractions/akordeon.webp" alt="Akordeonista grający podczas przyjęcia" loading="lazy" />
+                <img src="/media/attractions/saksofonista.webp" alt="Saksofonista grający podczas przyjęcia" loading="lazy" />
                 <span className="attractionIndex">05</span>
-                <div className="attractionIcon" aria-hidden="true">
-                  <svg viewBox="0 0 40 40"><path d="M6 10h8v20H6zM26 10h8v20h-8zM14 12l12-2v20l-12-2zM17 14v12M20 13v14M23 12v16" /><circle cx="10" cy="15" r="1" /><circle cx="10" cy="20" r="1" /><circle cx="10" cy="25" r="1" /></svg>
+                <div className="attractionIcon attractionIconSax" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><path d="M15 5h8l-2 6v10c0 6 3 10 8 10 3 0 5-2 5-5 0-2-1-4-3-5" /><path d="M20 12h-5M20 17h-6M21 22h-5M29 21l3-3M27 17l3-3" /><circle cx="14" cy="12" r="1.3" /><circle cx="13" cy="18" r="1.3" /><path d="M10 7c4 0 6 2 6 5v10c0 8 4 13 11 13" /></svg>
                 </div>
               </div>
               <div className="attractionBody">
                 <span className="attractionLabel">Na żywo</span>
-                <h3>Akordeonista</h3>
-                <p>Energia muzyki na żywo szybko łączy gości przy stołach i na parkiecie. Akordeon sprawdza się podczas wesela, poprawin i luźniejszej biesiady.</p>
+                <h3>Saksofonista</h3>
+                <p>Brzmienie saksofonu dodaje elegancji ceremonii, kolacji i pierwszemu tańcowi, a później świetnie łączy się z setem DJ-a. Repertuar i charakter występu dopasowujemy do momentu wydarzenia.</p>
                 <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
@@ -417,25 +514,10 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="attractionCard attractionCardWide attractionCardFinal">
-              <div className="attractionMedia">
-                <img src="/media/attractions/rolki.webp" alt="Twórczyni nagrywająca krótki film telefonem" loading="lazy" />
-                <span className="attractionIndex">07</span>
-                <div className="attractionIcon attractionIconPlay" aria-hidden="true">
-                  <svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="5" /><path d="m17 15 9 5-9 5V15ZM11 4v4M20 4v4M29 4v4" /></svg>
-                </div>
-              </div>
-              <div className="attractionBody">
-                <span className="attractionLabel">Social media</span>
-                <h3>Video i rolki</h3>
-                <p>Łapiemy spontaniczne momenty i składamy je w krótkie, dynamiczne materiały gotowe do publikacji. Otrzymujecie wspomnienia w formacie, który chce się od razu udostępnić.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
-              </div>
-            </article>
           </div>
 
           <div className="attractionsOutro">
-            <div><span>7</span><p>dodatków, z których ułożymy Wasz zestaw</p></div>
+            <div><span>6</span><p>atrakcji, z których ułożymy Wasz zestaw</p></div>
             <p>Nie musicie wybierać w ciemno. Powiedzcie nam, gdzie i dla ilu osób organizujecie wydarzenie, a podpowiemy atrakcje, które najlepiej zagrają razem.</p>
             <a className="primaryButton" href="#kontakt"><span>Ułóżmy Wasz pakiet</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
           </div>

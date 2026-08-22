@@ -187,7 +187,7 @@ export default function Home() {
           <a href="#realizacje">Fotobudka 360</a>
           <a href="#wiecej-o-nas">Więcej o nas</a>
           <a href="#inne-atrakcje">Inne atrakcje</a>
-          <a href="#opinie">Opinie</a>
+          <a className="mobileHiddenNav" href="#opinie">Opinie</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
 
@@ -573,7 +573,7 @@ export default function Home() {
             </div>
 
             <div className="reviewsControls">
-              <p>Przesuń w bok i poznaj więcej opinii</p>
+              <p>Przesuwaj w prawo</p>
               <div>
                 <button type="button" onClick={() => scrollReviews(-1)} aria-label="Poprzednie opinie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg></button>
                 <button type="button" onClick={() => scrollReviews(1)} aria-label="Następne opinie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>

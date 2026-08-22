@@ -27,6 +27,25 @@ const musicTeam = [
   },
 ] as const;
 
+const googleReviewsUrl = "https://www.google.com/search?q=DLAWAS.FUN+DJ+na+wesele+Gi%C5%BCycko+Opinie&tbm=lcl#lkt=LocalPoiReviews";
+
+const googleReviews = [
+  { name: "Bożena Lachowicz", text: "5 gwiazdek to za mało. Profeska od A do Z." },
+  { name: "Justyna", text: "Młodzież bawiła się doskonale, muzyka była świetnie dobrana." },
+  { name: "Aleksandra Szychta", text: "Nie mogliśmy wybrać lepiej! Od pierwszej rozmowy trafiliśmy w dobre ręce." },
+  { name: "Elżbieta Sereda", text: "Parkiet był pełen od początku do końca wesela." },
+  { name: "Patrycja B", text: "Całe wesele było super poprowadzone, parkiet zawsze był pełen." },
+  { name: "Nicola", text: "Wspaniały DJ! Piosenki bardzo dobrze dobrane dla każdego." },
+  { name: "Maria Jasińska", text: "Prowadzenie imprezy profesjonalne, a jednocześnie z pasją i zaangażowaniem." },
+  { name: "Mariusz Grigo", text: "Nasze wesele było niezapomniane, muzyka na najwyższym poziomie." },
+  { name: "Lena Dawidziuk", text: "Wspaniały DJ! Piosenki dopasowane do każdego." },
+  { name: "Paulina Szturo", text: "Rozkręcą każdą imprezę. Świetna zabawa i profesjonalne podejście." },
+  { name: "Anna Krawczyk", text: "Najlepsi w mieście. Bardzo dobra komunikacja i zawsze jakość." },
+  { name: "Gildas Boursin", text: "Super dobrze zorganizowana akcja, nagłośnienie wysokiej jakości." },
+  { name: "Maja", text: "Mega zabawa. Wiemy już, że Panowie będą także u nas." },
+  { name: "Edyta Kaźmierczak", text: "Super zabawa, polecam." },
+] as const;
+
 function ArrowUpRightIcon() {
   return (
     <svg className="inlineArrowIcon" viewBox="0 0 24 24" aria-hidden="true">
@@ -103,6 +122,7 @@ function StepSceneIcon({ type }: { type: "enter" | "orbit" | "effect" | "deliver
 
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const reviewsRailRef = useRef<HTMLDivElement>(null);
   const [soundOn, setSoundOn] = useState(false);
 
   useEffect(() => {
@@ -149,6 +169,12 @@ export default function Home() {
     }
   };
 
+  const scrollReviews = (direction: -1 | 1) => {
+    const rail = reviewsRailRef.current;
+    if (!rail) return;
+    rail.scrollBy({ left: direction * Math.min(rail.clientWidth * 0.82, 860), behavior: "smooth" });
+  };
+
   return (
     <main>
       <header className="siteHeader">
@@ -161,6 +187,7 @@ export default function Home() {
           <a href="#realizacje">Fotobudka 360</a>
           <a href="#wiecej-o-nas">Więcej o nas</a>
           <a href="#inne-atrakcje">Inne atrakcje</a>
+          <a href="#opinie">Opinie</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
 
@@ -531,10 +558,49 @@ export default function Home() {
             <a className="primaryButton" href="#kontakt"><span>Ułóżmy Wasz pakiet</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
           </div>
 
+          <section className="reviewsSection" id="opinie" aria-labelledby="reviews-heading">
+            <div className="reviewsIntro">
+              <div>
+                <p className="sectionKicker"><span>06</span> Opinie Google</p>
+                <h2 id="reviews-heading">Najlepiej mówią o nas<br /><em>pełne parkiety</em></h2>
+                <p>Pary Młode, goście i organizatorzy wracają do nas za atmosferę, kontakt i prowadzenie, które naprawdę angażuje ludzi.</p>
+              </div>
+              <a className="reviewsScore" href={googleReviewsUrl} target="_blank" rel="noreferrer" aria-label="Zobacz wszystkie opinie dlawas.fun w Google">
+                <span className="reviewsGoogle" aria-hidden="true">G</span>
+                <span><strong>5,0</strong><b aria-label="5 na 5 gwiazdek">★★★★★</b><small>16 opinii w Google</small></span>
+                <ArrowUpRightIcon />
+              </a>
+            </div>
+
+            <div className="reviewsControls">
+              <p>Przesuń w bok i poznaj więcej opinii</p>
+              <div>
+                <button type="button" onClick={() => scrollReviews(-1)} aria-label="Poprzednie opinie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg></button>
+                <button type="button" onClick={() => scrollReviews(1)} aria-label="Następne opinie"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
+              </div>
+            </div>
+
+            <div className="reviewsRail" ref={reviewsRailRef} role="region" aria-label="Opinie klientów dlawas.fun" tabIndex={0}>
+              {googleReviews.map((review, index) => (
+                <article className="reviewCard" key={review.name}>
+                  <div className="reviewCardTop"><span>{String(index + 1).padStart(2, "0")}</span><b aria-label="5 na 5 gwiazdek">★★★★★</b></div>
+                  <blockquote>„{review.text}”</blockquote>
+                  <footer><span>{review.name.charAt(0)}</span><p><strong>{review.name}</strong><small>Opinia Google</small></p></footer>
+                </article>
+              ))}
+              <a className="reviewCard reviewCardMore" href={googleReviewsUrl} target="_blank" rel="noreferrer">
+                <span className="reviewsGoogle" aria-hidden="true">G</span>
+                <strong>Zobacz wszystkie opinie</strong>
+                <p>Pełna lista i najnowsze wpisy znajdują się w profilu Google dlawas.fun.</p>
+                <i><ArrowUpRightIcon /></i>
+              </a>
+            </div>
+          </section>
+
           <section className="contactSection" id="kontakt" aria-labelledby="contact-heading">
             <div className="contactGlow" aria-hidden="true" />
             <div className="contactIntro">
-              <p className="sectionKicker"><span>06</span> Kontakt</p>
+              <p className="sectionKicker"><span>07</span> Kontakt</p>
               <div className="contactHeadline">
                 <h2 id="contact-heading">Jeden kontakt<br /><em>Cała impreza ogarnięta</em></h2>
                 <p>Opowiedzcie nam o swoim pomyśle. Sprawdzimy termin, dobierzemy fotobudkę 360, DJ-a i dodatki, a potem przedstawimy jasny plan bez przypadkowych elementów.</p>
@@ -568,12 +634,12 @@ export default function Home() {
                 </div>
                 <div className="contactPeople">
                   <a href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
-                    <span className="contactPersonMark">M</span>
+                    <Image className="contactPersonPhoto" src="/media/attractions/team/michal.webp" alt="" width={100} height={100} sizes="50px" />
                     <span><small>Michał • DJ i wodzirej</small><strong>780 059 216</strong></span>
                     <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
                   </a>
                   <a href="tel:+48501314774" aria-label="Zadzwoń do Pawła pod numer 501 314 774">
-                    <span className="contactPersonMark">P</span>
+                    <Image className="contactPersonPhoto" src="/media/attractions/team/pawel.webp" alt="" width={100} height={100} sizes="50px" />
                     <span><small>Paweł • DJ i wodzirej</small><strong>501 314 774</strong></span>
                     <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
                   </a>
@@ -611,7 +677,6 @@ export default function Home() {
                 <p className="sectionKicker"><span>MAZURY</span> Nasz punkt na mapie</p>
                 <h3>Z Giżycka<br /><em>na całe Mazury</em></h3>
                 <p>Działamy lokalnie i znamy logistykę wydarzeń w regionie. Dojeżdżamy między innymi do Mikołajek, Rynu, Mrągowa, Węgorzewa, Ełku i okolic.</p>
-                <address><small>dlawas.fun</small><strong>ul. 3 Maja 11<br />19-500 Giżycko</strong></address>
                 <div className="contactAreaTags" aria-label="Obsługiwane miejscowości">
                   <span>Giżycko</span><span>Mikołajki</span><span>Ryn</span><span>Mrągowo</span><span>Węgorzewo</span><span>Ełk</span>
                 </div>
@@ -632,7 +697,7 @@ export default function Home() {
 
           <aside className="hostCreditBar" aria-label="Autor projektu strony">
             <a className="hostCreditBrand" href="https://www.hostcontrol.pl/" target="_blank" rel="noreferrer" aria-label="Projekt strony: HostControl Krystian Stykowski">
-              <span className="hostCreditMark" aria-hidden="true">HC</span>
+              <Image className="hostCreditLogo" src="/hostcontrol-logo.svg" alt="" width={40} height={40} />
               <span className="hostCreditText">Zaprojektowano przez <strong>HostControl</strong> Krystian Stykowski</span>
             </a>
             <div className="hostCreditActions">

@@ -536,7 +536,7 @@ export default function Home() {
             <div className="contactIntro">
               <p className="sectionKicker"><span>06</span> Kontakt</p>
               <div className="contactHeadline">
-                <h2 id="contact-heading">Jeden kontakt.<br /><em>Cała impreza ogarnięta.</em></h2>
+                <h2 id="contact-heading">Jeden kontakt<br /><em>Cała impreza ogarnięta</em></h2>
                 <p>Opowiedzcie nam o swoim pomyśle. Sprawdzimy termin, dobierzemy fotobudkę 360, DJ-a i dodatki, a potem przedstawimy jasny plan bez przypadkowych elementów.</p>
               </div>
               <div className="contactHighlights" aria-label="Dlaczego warto się skontaktować">
@@ -564,7 +564,7 @@ export default function Home() {
                 <p className="contactStatus"><i /> Porozmawiacie bezpośrednio z ekipą dlawas.fun</p>
                 <div className="contactMainHeading">
                   <p>Wolicie od razu ustalić szczegóły?</p>
-                  <h3>Jesteśmy po drugiej stronie telefonu.</h3>
+                  <h3>Zadzwońcie — pogadamy o Waszej imprezie</h3>
                 </div>
                 <div className="contactPeople">
                   <a href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
@@ -629,6 +629,22 @@ export default function Home() {
               <div><Link href="/polityka-prywatnosci">Polityka prywatności</Link><span>© 2026 dlawas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
             </footer>
           </section>
+
+          <aside className="hostCreditBar" aria-label="Autor projektu strony">
+            <a className="hostCreditBrand" href="https://www.hostcontrol.pl/" target="_blank" rel="noreferrer" aria-label="Projekt strony: HostControl Krystian Stykowski">
+              <span className="hostCreditMark" aria-hidden="true">HC</span>
+              <span className="hostCreditText">Zaprojektowano przez <strong>HostControl</strong> Krystian Stykowski</span>
+            </a>
+            <div className="hostCreditActions">
+              <a href="tel:+48692746031" aria-label="Zadzwoń do HostControl: 692 746 031">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 7.8 8.2 9.6c1.3 2.6 3.5 4.8 6.1 6.1l1.8-1.8 4.3 2.8c.4.3.6.8.5 1.3l-.5 2.2c-.1.5-.6.8-1.1.8C10.3 21 3 13.7 3 4.7c0-.5.3-1 .8-1.1L6 3.1c.5-.1 1 .1 1.2.4Z" /></svg>
+                <span>692 746 031</span>
+              </a>
+              <a className="hostCreditInstagram" href="https://www.instagram.com/much4ty" target="_blank" rel="noreferrer" aria-label="Instagram HostControl — much4ty">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.7" r="1" /></svg>
+              </a>
+            </div>
+          </aside>
         </div>
       </section>
     </main>

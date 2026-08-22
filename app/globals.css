@@ -304,6 +304,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .contactMap { display: grid; grid-template-columns: minmax(360px,.7fr) minmax(0,1.3fr); min-height: 570px; border-bottom: 1px solid rgba(255,255,255,.12); }
 .contactMapCopy { display: flex; flex-direction: column; justify-content: center; padding: clamp(45px,5.5vw,82px) clamp(35px,6vw,88px); border-right: 1px solid rgba(255,255,255,.12); }
 .contactMapCopy .sectionKicker { margin-bottom: 29px; }
+.contactMapCopy .sectionKicker span, .privacyHero .sectionKicker span { width: auto; min-width: 32px; padding: 0 10px; border-radius: 999px; white-space: nowrap; }
 .contactMapCopy h3 { margin: 0; font-size: clamp(40px,4.5vw,66px); line-height: .92; letter-spacing: -.06em; text-transform: uppercase; }
 .contactMapCopy h3 em { color: var(--lime); font-style: normal; }
 .contactMapCopy > p:not(.sectionKicker) { max-width: 520px; margin: 27px 0 0; color: rgba(255,255,255,.58); font-size: 14px; line-height: 1.68; }
@@ -328,15 +329,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .siteFooter > div { justify-self: end; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 16px 24px; color: rgba(255,255,255,.38); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .siteFooter > div a { display: inline-flex; align-items: center; gap: 5px; color: rgba(255,255,255,.72); transition: color 180ms ease; }
 .siteFooter > div a:hover, .siteFooter > div a:focus-visible { color: var(--lime); }
+.hostCreditBar { display: grid; min-width: 0; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 16px; min-height: 58px; margin-top: 13px; padding: 9px 12px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; color: rgba(255,255,255,.54); background: linear-gradient(100deg,rgba(255,255,255,.035),rgba(143,85,255,.055) 55%,rgba(217,255,67,.04)); box-shadow: 0 16px 45px rgba(0,0,0,.16); }
+.hostCreditBrand { display: flex; min-width: 0; width: max-content; max-width: 100%; align-items: center; gap: 11px; }
+.hostCreditMark { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border: 1px solid rgba(217,255,67,.55); border-radius: 10px; color: var(--lime); background: rgba(6,5,9,.65); box-shadow: inset 0 0 16px rgba(143,85,255,.15); font-size: 11px; font-weight: 950; letter-spacing: -.07em; }
+.hostCreditText { min-width: 0; overflow: hidden; font-size: 9px; font-weight: 700; letter-spacing: .015em; text-overflow: ellipsis; white-space: nowrap; }
+.hostCreditText strong { color: var(--lime); font-weight: 900; }
+.hostCreditActions { display: flex; align-items: center; gap: 7px; }
+.hostCreditActions a { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; gap: 7px; padding: 0 11px; border: 1px solid rgba(255,255,255,.11); border-radius: 999px; color: rgba(255,255,255,.72); background: rgba(255,255,255,.025); font-size: 8px; font-weight: 850; letter-spacing: .035em; white-space: nowrap; transition: border-color 180ms ease,color 180ms ease,background 180ms ease; }
+.hostCreditActions a:hover, .hostCreditActions a:focus-visible { border-color: rgba(217,255,67,.42); color: var(--lime); background: rgba(217,255,67,.045); }
+.hostCreditActions svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; }
+.hostCreditActions .hostCreditInstagram { width: 34px; padding: 0; }
+.hostCreditActions .hostCreditInstagram circle:last-child { fill: currentColor; stroke: none; }
 .privacyPage { position: relative; min-height: 100vh; overflow: hidden; color: #fff; background: #08070c; isolation: isolate; }
 .privacyGlow { position: fixed; z-index: -1; inset: 0; pointer-events: none; background: radial-gradient(circle at 84% 7%,rgba(143,85,255,.22),transparent 29%),radial-gradient(circle at 10% 41%,rgba(255,47,168,.1),transparent 25%),radial-gradient(circle at 72% 88%,rgba(217,255,67,.055),transparent 23%); }
-.privacyHeader { display: flex; width: min(1280px,calc(100% - 48px)); min-height: 116px; align-items: center; justify-content: space-between; gap: 30px; margin: 0 auto; border-bottom: 1px solid rgba(255,255,255,.12); }
+.privacyHeader { display: flex; min-height: 116px; align-items: center; justify-content: space-between; gap: 30px; margin: 0 clamp(28px,7vw,112px); border-bottom: 1px solid rgba(255,255,255,.12); }
 .privacyHeader > a:first-child { display: inline-flex; }
 .privacyHeader img { display: block; width: 145px; height: 82px; object-fit: contain; object-position: left center; }
 .privacyBack { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,.68); font-size: 9px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; transition: color 180ms ease; }
 .privacyBack:hover, .privacyBack:focus-visible { color: var(--lime); }
 .privacyBack svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.privacyArticle { width: min(1180px,calc(100% - 48px)); margin: 0 auto; padding: 84px 0 110px; }
+.privacyArticle { margin: 0 clamp(28px,7vw,112px); padding: 84px 0 110px; }
 .privacyHero { position: relative; display: grid; grid-template-columns: minmax(0,1.25fr) minmax(310px,.55fr); align-items: end; gap: 70px; padding: 0 0 70px; }
 .privacyHero .sectionKicker { grid-column: 1 / -1; margin-bottom: -12px; }
 .privacyHero h1 { margin: 0; font-size: clamp(66px,9vw,132px); line-height: .82; letter-spacing: -.075em; text-transform: uppercase; }
@@ -367,7 +379,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .privacyContact { border: 1px solid rgba(217,255,67,.32)!important; border-radius: 24px; padding-right: clamp(24px,4vw,58px)!important; padding-left: clamp(24px,4vw,58px)!important; background: linear-gradient(135deg,rgba(143,85,255,.13),rgba(217,255,67,.035)); }
 .privacyContact a { display: inline-flex; align-items: center; gap: 13px; margin-top: 28px; color: var(--lime); font-size: clamp(22px,3vw,38px); font-weight: 800; letter-spacing: -.035em; }
 .privacyContact a svg { width: 31px; height: 31px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
-.privacyFooter { display: flex; width: min(1280px,calc(100% - 48px)); min-height: 100px; align-items: center; justify-content: flex-end; gap: 25px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.38); font-size: 8px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.privacyFooter { display: flex; min-height: 100px; align-items: center; justify-content: flex-end; gap: 25px; margin: 0 clamp(28px,7vw,112px); border-top: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.38); font-size: 8px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
 .privacyFooter a { color: rgba(255,255,255,.68); transition: color 180ms ease; }
 .privacyFooter a:hover, .privacyFooter a:focus-visible { color: var(--lime); }
 @keyframes contactPulse { 0%,100% { opacity: .65; transform: scale(.88); } 50% { opacity: 1; transform: scale(1.08); } }
@@ -604,11 +616,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .siteFooter > a { justify-self: center; }
   .siteFooter img { width: 112px; height: 64px; object-position: center; }
   .siteFooter > div { justify-self: stretch; justify-content: center; gap: 13px 18px; font-size: 8px; text-align: center; }
-  .privacyHeader { width: calc(100% - 32px); min-height: 94px; gap: 16px; }
+  .hostCreditBar { gap: 6px; min-height: 46px; margin-top: 9px; padding: 6px 7px; border-radius: 12px; }
+  .hostCreditBrand { gap: 6px; }
+  .hostCreditMark { width: 27px; height: 27px; border-radius: 8px; font-size: 9px; }
+  .hostCreditText { font-size: clamp(6px,1.65vw,7px); letter-spacing: -.015em; }
+  .hostCreditActions { gap: 4px; }
+  .hostCreditActions a { min-height: 27px; gap: 4px; padding: 0 6px; font-size: clamp(6px,1.65vw,7px); }
+  .hostCreditActions svg { width: 12px; height: 12px; }
+  .hostCreditActions a:first-child { width: 27px; padding: 0; }
+  .hostCreditActions a:first-child span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .hostCreditActions .hostCreditInstagram { width: 27px; padding: 0; }
+  .privacyHeader { width: calc(100% - 32px); min-height: 94px; gap: 16px; margin: 0 auto; }
   .privacyHeader img { width: 112px; height: 66px; }
   .privacyBack { gap: 7px; font-size: 7px; letter-spacing: .08em; }
   .privacyBack svg { width: 17px; height: 17px; }
-  .privacyArticle { width: calc(100% - 40px); padding: 58px 0 76px; }
+  .privacyArticle { width: calc(100% - 40px); margin: 0 auto; padding: 58px 0 76px; }
   .privacyHero { gap: 24px; padding-bottom: 46px; }
   .privacyHero .sectionKicker { margin-bottom: 2px; }
   .privacyHero h1 { font-size: clamp(46px,13vw,58px); line-height: .86; }
@@ -630,7 +652,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .privacyContent li::before { top: 22px; left: 18px; }
   .privacyContact { padding: 32px 22px!important; border-radius: 20px; }
   .privacyContact a { overflow-wrap: anywhere; font-size: 20px; }
-  .privacyFooter { width: calc(100% - 32px); min-height: 86px; flex-wrap: wrap; justify-content: center; gap: 10px 18px; padding: 20px 0; text-align: center; }
+  .privacyFooter { width: calc(100% - 32px); min-height: 86px; flex-wrap: wrap; justify-content: center; gap: 10px 18px; margin: 0 auto; padding: 20px 0; text-align: center; }
 }
 
 @media (max-height: 730px) and (max-width: 767px) {

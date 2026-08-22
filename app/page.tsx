@@ -603,7 +603,7 @@ export default function Home() {
               <p className="sectionKicker"><span>07</span> Kontakt</p>
               <div className="contactHeadline">
                 <h2 id="contact-heading">Jeden kontakt<br /><em>Cała impreza ogarnięta</em></h2>
-                <p>Opowiedzcie nam o swoim pomyśle. Sprawdzimy termin, dobierzemy fotobudkę 360, DJ-a i dodatki, a potem przedstawimy jasny plan bez przypadkowych elementów.</p>
+                <p>Opowiedzcie nam o swoim pomyśle. Sprawdzimy termin, dobierzemy fotobudkę 360, DJ-a i dodatki, a potem przedstawimy jasny plan.</p>
               </div>
               <div className="contactHighlights" aria-label="Dlaczego warto się skontaktować">
                 <span><b>01</b> Konkretny plan wydarzenia</span>
@@ -627,9 +627,8 @@ export default function Home() {
 
             <div className="contactGrid">
               <div className="contactMain">
-                <p className="contactStatus"><i /> Porozmawiacie bezpośrednio z ekipą dlawas.fun</p>
+                <p className="contactStatus"><i /> Wolicie od razu ustalić szczegóły?</p>
                 <div className="contactMainHeading">
-                  <p>Wolicie od razu ustalić szczegóły?</p>
                   <h3>Zadzwońcie, pogadamy o Waszej imprezie</h3>
                 </div>
                 <div className="contactPeople">

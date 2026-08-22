@@ -63,11 +63,11 @@ export default function PrivacyPolicy() {
               <h2>Co przetwarzamy i dlaczego</h2>
               <p>Serwis nie posiada formularza, kont użytkowników ani płatności online. Dane otrzymujemy, gdy użytkownik dobrowolnie kontaktuje się z nami telefonicznie albo e-mailem. Mogą to być między innymi: imię, dane kontaktowe, termin i miejsce wydarzenia, liczba gości oraz informacje potrzebne do przygotowania oferty i realizacji usługi.</p>
               <ul>
-                <li><strong>Obsługa zapytania i przygotowanie oferty</strong> — podjęcie działań przed zawarciem umowy, art. 6 ust. 1 lit. b RODO.</li>
-                <li><strong>Realizacja zamówionej usługi</strong> — wykonanie umowy, art. 6 ust. 1 lit. b RODO.</li>
-                <li><strong>Rozliczenia i obowiązki prawne</strong> — art. 6 ust. 1 lit. c RODO.</li>
-                <li><strong>Bezpieczeństwo, administracja i obrona roszczeń</strong> — prawnie uzasadniony interes Administratora, art. 6 ust. 1 lit. f RODO.</li>
-                <li><strong>Marketing bezpośredni</strong> — wyłącznie wtedy, gdy istnieje właściwa podstawa prawna, w tym zgoda, jeżeli jest wymagana.</li>
+                <li><strong>Obsługa zapytania i przygotowanie oferty:</strong> podjęcie działań przed zawarciem umowy, art. 6 ust. 1 lit. b RODO.</li>
+                <li><strong>Realizacja zamówionej usługi:</strong> wykonanie umowy, art. 6 ust. 1 lit. b RODO.</li>
+                <li><strong>Rozliczenia i obowiązki prawne:</strong> art. 6 ust. 1 lit. c RODO.</li>
+                <li><strong>Bezpieczeństwo, administracja i obrona roszczeń:</strong> prawnie uzasadniony interes Administratora, art. 6 ust. 1 lit. f RODO.</li>
+                <li><strong>Marketing bezpośredni:</strong> wyłącznie wtedy, gdy istnieje właściwa podstawa prawna, w tym zgoda, jeżeli jest wymagana.</li>
               </ul>
             </div>
           </section>
@@ -79,7 +79,7 @@ export default function PrivacyPolicy() {
               <h2>Hosting, logi i mapa</h2>
               <p>Serwis korzysta z szyfrowanego połączenia HTTPS i jest utrzymywany na infrastrukturze Vercel. Dostawca hostingu może przetwarzać dane techniczne niezbędne do bezpiecznego działania strony, takie jak adres IP, czas zapytania, adres żądanego zasobu, typ urządzenia lub przeglądarki i informacje o błędach.</p>
               <p>W sekcji kontaktowej znajduje się mapa OpenStreetMap. Mapa jest ładowana z serwerów zewnętrznego dostawcy dopiero w pobliżu momentu jej wyświetlenia. W związku z tym OpenStreetMap może otrzymać informacje techniczne, w szczególności adres IP i dane przeglądarki. Szczegóły opisuje <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noreferrer">polityka prywatności OpenStreetMap Foundation</a>.</p>
-              <p>Dane mogą być ujawniane podmiotom świadczącym usługi hostingowe, telekomunikacyjne, pocztowe, księgowe lub prawne oraz upoważnionym współpracownikom — wyłącznie w zakresie potrzebnym do wykonania ich zadań. Jeżeli dostawca przetwarza dane poza Europejskim Obszarem Gospodarczym, odbywa się to z zastosowaniem mechanizmów wymaganych przez obowiązujące przepisy.</p>
+              <p>Dane mogą być ujawniane podmiotom świadczącym usługi hostingowe, telekomunikacyjne, pocztowe, księgowe lub prawne oraz upoważnionym współpracownikom, wyłącznie w zakresie potrzebnym do wykonania ich zadań. Jeżeli dostawca przetwarza dane poza Europejskim Obszarem Gospodarczym, odbywa się to z zastosowaniem mechanizmów wymaganych przez obowiązujące przepisy.</p>
             </div>
           </section>
 
@@ -118,7 +118,7 @@ export default function PrivacyPolicy() {
               <p className="privacyLabel">Pytania o prywatność</p>
               <h2>Napisz do nas</h2>
               <p>W sprawach dotyczących danych osobowych i realizacji swoich praw skontaktuj się bezpośrednio z Administratorem.</p>
-              <a href="mailto:kontakt@dlawas.fun?subject=Prywatno%C5%9B%C4%87%20i%20dane%20osobowe%20%E2%80%94%20dlawas.fun">kontakt@dlawas.fun <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+              <a href="mailto:kontakt@dlawas.fun?subject=Prywatno%C5%9B%C4%87%20i%20dane%20osobowe%20-%20dlawas.fun">kontakt@dlawas.fun <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
             </div>
           </section>
         </div>

@@ -458,7 +458,7 @@ export default function Home() {
                 {musicTeam.map((person) => (
                   <article className="musicPerson" key={person.name}>
                     <div className="musicPersonPhoto">
-                      <Image src={person.image} alt={`${person.name} — DJ i wodzirej dlawas.fun`} fill sizes="(max-width: 767px) 42vw, (max-width: 1200px) 22vw, 260px" />
+                      <Image src={person.image} alt={`${person.name}, DJ i wodzirej dlawas.fun`} fill sizes="(max-width: 767px) 42vw, (max-width: 1200px) 22vw, 260px" />
                     </div>
                     <div className="musicPersonCopy">
                       <span>Oprawa muzyczna</span>
@@ -618,7 +618,7 @@ export default function Home() {
                 <span><small>Najprościej i najszybciej</small><strong>Zadzwoń teraz</strong><em>780 059 216</em></span>
                 <b aria-hidden="true"><ArrowUpRightIcon /></b>
               </a>
-              <a className="contactQuickAction" href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20%E2%80%94%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" aria-label="Napisz e-mail i zapytaj o termin">
+              <a className="contactQuickAction" href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20-%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" aria-label="Napisz e-mail i zapytaj o termin">
                 <i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
                 <span><small>Macie już datę?</small><strong>Zapytaj o termin</strong><em>kontakt@dlawas.fun</em></span>
                 <b aria-hidden="true"><ArrowUpRightIcon /></b>
@@ -630,7 +630,7 @@ export default function Home() {
                 <p className="contactStatus"><i /> Porozmawiacie bezpośrednio z ekipą dlawas.fun</p>
                 <div className="contactMainHeading">
                   <p>Wolicie od razu ustalić szczegóły?</p>
-                  <h3>Zadzwońcie — pogadamy o Waszej imprezie</h3>
+                  <h3>Zadzwońcie, pogadamy o Waszej imprezie</h3>
                 </div>
                 <div className="contactPeople">
                   <a href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
@@ -665,7 +665,7 @@ export default function Home() {
                   <li><span>02</span><p><strong>Miejsce i goście</strong>Miasto, sala i orientacyjna liczba osób</p></li>
                   <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i interesujące usługi</p></li>
                 </ol>
-                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20%E2%80%94%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" className="primaryButton contactWrite">
+                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20-%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" className="primaryButton contactWrite">
                   <span>Przygotuj wiadomość</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
@@ -683,7 +683,7 @@ export default function Home() {
                 <a className="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=3+Maja+11%2C+19-500+Gi%C5%BCycko" target="_blank" rel="noreferrer">Otwórz trasę w Mapach <ArrowUpRightIcon /></a>
               </div>
               <div className="contactMapFrame">
-                <iframe title="Mapa Giżycka — siedziba dlawas.fun" src="https://www.openstreetmap.org/export/embed.html?bbox=21.724%2C54.006%2C21.826%2C54.075&amp;layer=mapnik&amp;marker=54.038%2C21.769" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <iframe title="Mapa Giżycka, siedziba dlawas.fun" src="https://www.openstreetmap.org/export/embed.html?bbox=21.724%2C54.006%2C21.826%2C54.075&amp;layer=mapnik&amp;marker=54.038%2C21.769" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
                 <div className="mapPinLabel" aria-hidden="true"><span>54°N</span><b>Giżycko</b><small>Serce Mazur</small></div>
               </div>
             </div>
@@ -705,7 +705,7 @@ export default function Home() {
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 7.8 8.2 9.6c1.3 2.6 3.5 4.8 6.1 6.1l1.8-1.8 4.3 2.8c.4.3.6.8.5 1.3l-.5 2.2c-.1.5-.6.8-1.1.8C10.3 21 3 13.7 3 4.7c0-.5.3-1 .8-1.1L6 3.1c.5-.1 1 .1 1.2.4Z" /></svg>
                 <span>692 746 031</span>
               </a>
-              <a className="hostCreditInstagram" href="https://www.instagram.com/much4ty" target="_blank" rel="noreferrer" aria-label="Instagram HostControl — much4ty">
+              <a className="hostCreditInstagram" href="https://www.instagram.com/much4ty" target="_blank" rel="noreferrer" aria-label="Instagram HostControl, much4ty">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.7" r="1" /></svg>
               </a>
             </div>

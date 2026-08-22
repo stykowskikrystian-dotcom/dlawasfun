@@ -2,6 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 
+function ArrowUpRightIcon() {
+  return (
+    <svg className="inlineArrowIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 17 17 7M8 7h9v9" />
+    </svg>
+  );
+}
+
+function ArrowUpIcon() {
+  return (
+    <svg className="inlineArrowIcon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 19V5M6 11l6-6 6 6" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [soundOn, setSoundOn] = useState(false);
@@ -146,8 +162,10 @@ export default function Home() {
 
           <div className="experienceGrid">
             <figure className="experiencePhoto experiencePhotoMain">
-              <img src="/media/how-it-works/wedding.jpg" alt="Rozbawieni goście tańczący z parą młodą podczas wesela" loading="lazy" />
-              <figcaption><span>Wesele</span><strong>Moment, do którego ustawia się kolejka</strong></figcaption>
+              <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-queue-poster.jpg" aria-label="Goście bawiący się na platformie fotobudki 360">
+                <source src="/media/how-it-works/experience-queue.mp4" type="video/mp4" />
+              </video>
+              <figcaption><strong>Moment, do którego ustawia się kolejka</strong></figcaption>
             </figure>
             <div className="experiencePitch">
               <span className="pitchNumber">360°</span>
@@ -216,36 +234,8 @@ export default function Home() {
             <div><strong>FUN</strong><span>obsługa, która rozkręca ekipę</span></div>
           </div>
 
-          <div className="nightRhythm">
-            <div className="nightRhythmIntro">
-              <p className="sectionKicker"><span>04</span> Przez całą imprezę</p>
-              <h2>Im później,<br /><em>tym więcej odwagi</em></h2>
-              <p>Fotobudka żyje razem z wydarzeniem. Na początku przełamuje pierwsze lody, później przyciąga kolejne ekipy, a pod koniec zbiera najbardziej spontaniczne momenty wieczoru.</p>
-            </div>
-            <div className="rhythmTimeline">
-              <article>
-                <span className="rhythmTime">START</span>
-                <div className="rhythmLine"><i /></div>
-                <strong>Pierwsze wejścia</strong>
-                <p>Prowadzący i najbliżsi pokazują, jak to działa. Reszta gości już obserwuje i planuje własny klip.</p>
-              </article>
-              <article>
-                <span className="rhythmTime">PEAK</span>
-                <div className="rhythmLine"><i /></div>
-                <strong>Pełna kolejka</strong>
-                <p>Powstają większe ekipy, wspólne układy i coraz odważniejsze pomysły. Atrakcja napędza się sama.</p>
-              </article>
-              <article>
-                <span className="rhythmTime">FINAŁ</span>
-                <div className="rhythmLine"><i /></div>
-                <strong>Klipy jadą z gośćmi</strong>
-                <p>Każdy wychodzi z filmem na telefonie, gotowym do zapisania, wysłania i wrzucenia do sieci.</p>
-              </article>
-            </div>
-          </div>
-
           <div className="offerIntro" id="wiecej-o-nas">
-            <p className="sectionKicker"><span>05</span> Więcej o nas</p>
+            <p className="sectionKicker"><span>04</span> Więcej o nas</p>
             <div className="offerIntroCopy">
               <h2>Od pierwszego bitu<br /><em>do ostatniego światła</em></h2>
               <p>DlaWas.fun to nie tylko fotobudka. Możecie wybrać pojedynczą usługę albo zbudować z nami pełną oprawę wydarzenia. Każdy element dopasowujemy do miejsca, liczby gości i charakteru imprezy.</p>
@@ -323,7 +313,7 @@ export default function Home() {
           </div>
 
           <div className="attractionsIntro" id="inne-atrakcje">
-            <p className="sectionKicker"><span>06</span> Inne atrakcje</p>
+            <p className="sectionKicker"><span>05</span> Inne atrakcje</p>
             <div className="attractionsIntroCopy">
               <h2>Jeszcze więcej emocji<br /><em>W jednym wydarzeniu</em></h2>
               <p>Do muzyki i fotobudki możecie dobrać dodatki, które budują klimat od ceremonii aż po finał imprezy. Łączymy je w spójną oprawę, żeby każdy moment miał własny efekt wow.</p>
@@ -343,7 +333,7 @@ export default function Home() {
                 <span className="attractionLabel">Ceremonia</span>
                 <h3>Oprawa muzyczna</h3>
                 <p>Śpiew i skrzypce nadają ceremonii osobisty, wzruszający charakter. Repertuar dobieramy do Was i miejsca uroczystości, zarówno w kościele, plenerze, jak i podczas ślubu cywilnego.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -359,7 +349,7 @@ export default function Home() {
                 <span className="attractionLabel">Efekt wow</span>
                 <h3>Fontanna iskier</h3>
                 <p>Spektakularna oprawa pierwszego tańca, wejścia lub kulminacyjnego momentu. Zimne iskry dają widowiskowy efekt na żywo i świetnie wyglądają na filmach.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -375,7 +365,7 @@ export default function Home() {
                 <span className="attractionLabel">Klimat</span>
                 <h3>Dekoracja światłem</h3>
                 <p>Kolorem i światłem podkreślamy architekturę sali, strefę Pary Młodej oraz parkiet. Całość dopasowujemy do motywu przewodniego i rytmu imprezy.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -391,7 +381,7 @@ export default function Home() {
                 <span className="attractionLabel">Pierwszy taniec</span>
                 <h3>Ciężki dym</h3>
                 <p>Gęsta chmura utrzymuje się nisko nad parkietem i tworzy efekt tańca w obłokach. To eleganckie tło dla pierwszego tańca oraz wyjątkowych ujęć.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -407,7 +397,7 @@ export default function Home() {
                 <span className="attractionLabel">Na żywo</span>
                 <h3>Akordeonista</h3>
                 <p>Energia muzyki na żywo szybko łączy gości przy stołach i na parkiecie. Akordeon sprawdza się podczas wesela, poprawin i luźniejszej biesiady.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -423,7 +413,7 @@ export default function Home() {
                 <span className="attractionLabel">Dekoracja</span>
                 <h3>Napis LOVE</h3>
                 <p>Świetlny napis staje się mocnym punktem sali i naturalnym tłem do zdjęć. Dodaje ciepła aranżacji i jest widoczny przez całe przyjęcie.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
 
@@ -439,7 +429,7 @@ export default function Home() {
                 <span className="attractionLabel">Social media</span>
                 <h3>Video i rolki</h3>
                 <p>Łapiemy spontaniczne momenty i składamy je w krótkie, dynamiczne materiały gotowe do publikacji. Otrzymujecie wspomnienia w formacie, który chce się od razu udostępnić.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span aria-hidden="true">↗</span></a>
+                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
               </div>
             </article>
           </div>
@@ -453,7 +443,7 @@ export default function Home() {
           <section className="contactSection" id="kontakt" aria-labelledby="contact-heading">
             <div className="contactGlow" aria-hidden="true" />
             <div className="contactIntro">
-              <p className="sectionKicker"><span>07</span> Kontakt</p>
+              <p className="sectionKicker"><span>06</span> Kontakt</p>
               <h2 id="contact-heading">Zróbmy imprezę<br /><em>o której będzie głośno</em></h2>
               <p>Powiedzcie nam, co planujecie. Dobierzemy fotobudkę, muzykę i dodatki do miejsca, liczby gości oraz charakteru wydarzenia.</p>
             </div>
@@ -474,9 +464,9 @@ export default function Home() {
                 <div className="contactSocials" aria-label="DlaWas.fun w internecie">
                   <span>Znajdźcie nas</span>
                   <div>
-                    <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer">Instagram <b>↗</b></a>
-                    <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer">Facebook <b>↗</b></a>
-                    <a href="https://www.dlawas.fun/" target="_blank" rel="noreferrer">dlawas.fun <b>↗</b></a>
+                    <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer">Instagram <b><ArrowUpRightIcon /></b></a>
+                    <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer">Facebook <b><ArrowUpRightIcon /></b></a>
+                    <a href="https://www.dlawas.fun/" target="_blank" rel="noreferrer">dlawas.fun <b><ArrowUpRightIcon /></b></a>
                   </div>
                 </div>
               </div>
@@ -502,7 +492,7 @@ export default function Home() {
             <footer className="siteFooter">
               <a href="#start" aria-label="Wróć na początek"><img src="/logo-dlawas-fun-nav.png" alt="DlaWas.fun" /></a>
               <p>DJ • Fotobudka 360° • Oprawa wydarzeń</p>
-              <div><span>© 2026 DlaWas.fun</span><a href="#start">Wróć na górę ↑</a></div>
+              <div><span>© 2026 DlaWas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
             </footer>
           </section>
         </div>

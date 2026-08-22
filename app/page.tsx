@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const musicTeam = [
@@ -534,25 +535,51 @@ export default function Home() {
             <div className="contactGlow" aria-hidden="true" />
             <div className="contactIntro">
               <p className="sectionKicker"><span>06</span> Kontakt</p>
-              <h2 id="contact-heading">Zróbmy imprezę<br /><em>o której będzie głośno</em></h2>
-              <p>Powiedzcie nam, co planujecie. Dobierzemy fotobudkę, muzykę i dodatki do miejsca, liczby gości oraz charakteru wydarzenia.</p>
+              <div className="contactHeadline">
+                <h2 id="contact-heading">Jeden kontakt.<br /><em>Cała impreza ogarnięta.</em></h2>
+                <p>Opowiedzcie nam o swoim pomyśle. Sprawdzimy termin, dobierzemy fotobudkę 360, DJ-a i dodatki, a potem przedstawimy jasny plan bez przypadkowych elementów.</p>
+              </div>
+              <div className="contactHighlights" aria-label="Dlaczego warto się skontaktować">
+                <span><b>01</b> Konkretny plan wydarzenia</span>
+                <span><b>02</b> Pakiet dopasowany do miejsca</span>
+                <span><b>03</b> Jedna ekipa, pełna realizacja</span>
+              </div>
+            </div>
+
+            <div className="contactQuickActions" aria-label="Szybki kontakt">
+              <a className="contactQuickAction contactQuickActionPrimary" href="tel:+48780059216" aria-label="Zadzwoń teraz pod numer 780 059 216">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
+                <span><small>Najprościej i najszybciej</small><strong>Zadzwoń teraz</strong><em>780 059 216</em></span>
+                <b aria-hidden="true"><ArrowUpRightIcon /></b>
+              </a>
+              <a className="contactQuickAction" href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20%E2%80%94%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" aria-label="Napisz e-mail i zapytaj o termin">
+                <i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
+                <span><small>Macie już datę?</small><strong>Zapytaj o termin</strong><em>kontakt@dlawas.fun</em></span>
+                <b aria-hidden="true"><ArrowUpRightIcon /></b>
+              </a>
             </div>
 
             <div className="contactGrid">
               <div className="contactMain">
-                <p className="contactStatus"><i /> Jesteśmy dostępni, zapytajcie o swój termin</p>
-                <div className="contactLinks">
-                  <a href="tel:+48780059216" aria-label="Zadzwoń pod numer 780 059 216">
-                    <span><small>Telefon</small><strong>780 059 216</strong></span>
-                    <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
+                <p className="contactStatus"><i /> Porozmawiacie bezpośrednio z ekipą dlawas.fun</p>
+                <div className="contactMainHeading">
+                  <p>Wolicie od razu ustalić szczegóły?</p>
+                  <h3>Jesteśmy po drugiej stronie telefonu.</h3>
+                </div>
+                <div className="contactPeople">
+                  <a href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
+                    <span className="contactPersonMark">M</span>
+                    <span><small>Michał • DJ i wodzirej</small><strong>780 059 216</strong></span>
+                    <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
                   </a>
-                  <a href="mailto:kontakt@dlawas.fun" aria-label="Napisz na kontakt@dlawas.fun">
-                    <span><small>E-mail</small><strong>kontakt@dlawas.fun</strong></span>
-                    <i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
+                  <a href="tel:+48501314774" aria-label="Zadzwoń do Pawła pod numer 501 314 774">
+                    <span className="contactPersonMark">P</span>
+                    <span><small>Paweł • DJ i wodzirej</small><strong>501 314 774</strong></span>
+                    <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
                   </a>
                 </div>
                 <div className="contactSocials" aria-label="dlawas.fun w internecie">
-                  <span>Znajdźcie nas</span>
+                  <span>Zobaczcie, jak pracujemy</span>
                   <div>
                     <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer">Instagram <b><ArrowUpRightIcon /></b></a>
                     <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer">Facebook <b><ArrowUpRightIcon /></b></a>
@@ -565,24 +592,41 @@ export default function Home() {
                 <div className="contactBriefIcon" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M12 5h16a4 4 0 0 1 4 4v22a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4Z" /><path d="M14 3v5M26 3v5M8 13h24M14 20h5M14 26h12" /><circle cx="27" cy="20" r="1" /></svg>
                 </div>
-                <p className="contactBriefLabel">Żeby szybko sprawdzić ofertę</p>
-                <h3>Napiszcie nam trzy rzeczy</h3>
+                <p className="contactBriefLabel">Wystarczy krótka wiadomość</p>
+                <h3>Dajcie nam dobry punkt startu</h3>
                 <ol>
                   <li><span>01</span><p><strong>Termin</strong>Data wydarzenia</p></li>
-                  <li><span>02</span><p><strong>Miejsce</strong>Miasto lub nazwa sali</p></li>
-                  <li><span>03</span><p><strong>Plan imprezy</strong>Rodzaj wydarzenia i wybrane atrakcje</p></li>
+                  <li><span>02</span><p><strong>Miejsce i goście</strong>Miasto, sala i orientacyjna liczba osób</p></li>
+                  <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i interesujące usługi</p></li>
                 </ol>
-                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0AWybrane%20atrakcje%3A" className="primaryButton contactWrite">
-                  <span>Napisz wiadomość</span>
+                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20%E2%80%94%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" className="primaryButton contactWrite">
+                  <span>Przygotuj wiadomość</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
               </aside>
             </div>
 
+            <div className="contactMap">
+              <div className="contactMapCopy">
+                <p className="sectionKicker"><span>MAZURY</span> Nasz punkt na mapie</p>
+                <h3>Z Giżycka<br /><em>na całe Mazury</em></h3>
+                <p>Działamy lokalnie i znamy logistykę wydarzeń w regionie. Dojeżdżamy między innymi do Mikołajek, Rynu, Mrągowa, Węgorzewa, Ełku i okolic.</p>
+                <address><small>dlawas.fun</small><strong>ul. 3 Maja 11<br />19-500 Giżycko</strong></address>
+                <div className="contactAreaTags" aria-label="Obsługiwane miejscowości">
+                  <span>Giżycko</span><span>Mikołajki</span><span>Ryn</span><span>Mrągowo</span><span>Węgorzewo</span><span>Ełk</span>
+                </div>
+                <a className="mapLink" href="https://www.google.com/maps/search/?api=1&amp;query=3+Maja+11%2C+19-500+Gi%C5%BCycko" target="_blank" rel="noreferrer">Otwórz trasę w Mapach <ArrowUpRightIcon /></a>
+              </div>
+              <div className="contactMapFrame">
+                <iframe title="Mapa Giżycka — siedziba dlawas.fun" src="https://www.openstreetmap.org/export/embed.html?bbox=21.724%2C54.006%2C21.826%2C54.075&amp;layer=mapnik&amp;marker=54.038%2C21.769" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                <div className="mapPinLabel" aria-hidden="true"><span>54°N</span><b>Giżycko</b><small>Serce Mazur</small></div>
+              </div>
+            </div>
+
             <footer className="siteFooter">
               <a href="#start" aria-label="Wróć na początek"><img src="/logo-dlawas-fun-nav.png" alt="dlawas.fun" /></a>
               <p>DJ • Fotobudka 360° • Oprawa wydarzeń</p>
-              <div><span>© 2026 dlawas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
+              <div><Link href="/polityka-prywatnosci">Polityka prywatności</Link><span>© 2026 dlawas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
             </footer>
           </section>
         </div>

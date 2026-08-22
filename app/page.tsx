@@ -151,8 +151,8 @@ export default function Home() {
   return (
     <main>
       <header className="siteHeader">
-        <a className="brand" href="#start" aria-label="DlaWas.fun, strona główna">
-          <img className="brandLogo" src="/logo-dlawas-fun-nav.png" alt="DlaWas.fun" />
+        <a className="brand" href="#start" aria-label="dlawas.fun, strona główna">
+          <img className="brandLogo" src="/logo-dlawas-fun-nav.png" alt="dlawas.fun" />
         </a>
 
         <nav className="desktopNav" aria-label="Główna nawigacja">
@@ -170,13 +170,13 @@ export default function Home() {
           <a className="emailShortcut" href="mailto:kontakt@dlawas.fun" aria-label="Napisz e-mail: kontakt@dlawas.fun" title="kontakt@dlawas.fun">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg>
           </a>
-          <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Instagram DlaWas.fun" title="Instagram">
+          <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Instagram dlawas.fun" title="Instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle className="socialDot" cx="17.4" cy="6.7" r="1" /></svg>
           </a>
-          <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer" aria-label="Facebook DlaWas.fun" title="Facebook">
+          <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer" aria-label="Facebook dlawas.fun" title="Facebook">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path className="socialFill" d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4Z" /></svg>
           </a>
-          <a className="websiteShortcut" href="https://www.dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Otwórz stronę DlaWas.fun" title="dlawas.fun">
+          <a className="websiteShortcut" href="https://www.dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Otwórz stronę dlawas.fun" title="dlawas.fun">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.3 2.5 3.5 5.5 3.5 9S14.3 18.5 12 21M12 3C9.7 5.5 8.5 8.5 8.5 12s1.2 6.5 3.5 9" /></svg>
           </a>
         </div>
@@ -244,9 +244,17 @@ export default function Home() {
 
           <div className="experienceGrid">
             <figure className="experiencePhoto experiencePhotoMain">
-              <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-queue-poster.jpg" aria-label="Goście bawiący się na platformie fotobudki 360">
-                <source src="/media/how-it-works/experience-queue.mp4" type="video/mp4" />
-              </video>
+              <div className="experienceReel" role="group" aria-label="Goście bawiący się na platformie fotobudki 360">
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-guest-a-poster.jpg" aria-label="Goście nagrywający klip w fotobudce 360">
+                  <source src="/media/how-it-works/experience-guest-a.mp4" type="video/mp4" />
+                </video>
+                <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-queue-poster.jpg" aria-label="Goście tańczący na platformie fotobudki 360">
+                  <source src="/media/how-it-works/experience-queue.mp4" type="video/mp4" />
+                </video>
+                <video className="experienceClipDesktop" autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-guest-b-poster.jpg" aria-label="Kolejny klip nagrywany w fotobudce 360">
+                  <source media="(min-width: 768px)" src="/media/how-it-works/experience-guest-b.mp4" type="video/mp4" />
+                </video>
+              </div>
               <figcaption><strong>Moment, do którego ustawia się kolejka</strong></figcaption>
             </figure>
             <div className="experiencePitch">
@@ -289,7 +297,7 @@ export default function Home() {
 
           <div className="partyProof" id="realizacje">
             <div className="partyCollage" aria-label="Energia podczas imprezy">
-              <figure className="partyImage partyImageOne"><img src="/media/how-it-works/sparklers.jpg" alt="Przyjaciele świętujący wspólnie z zimnymi ogniami" loading="lazy" /></figure>
+              <figure className="partyImage partyImageOne"><Image src="/media/how-it-works/platform-guests.webp" alt="Goście nagrywający wspólny klip na platformie 360" fill sizes="(max-width: 767px) 70vw, (max-width: 1200px) 65vw, 560px" /></figure>
               <figure className="partyVideo">
                 <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/party-loop-poster.jpg" aria-label="Krótki film z energetycznej imprezy">
                   <source src="/media/how-it-works/party-loop.mp4" type="video/mp4" />
@@ -320,7 +328,7 @@ export default function Home() {
             <p className="sectionKicker"><span>04</span> Więcej o nas</p>
             <div className="offerIntroCopy">
               <h2>Od pierwszego bitu<br /><em>do ostatniego światła</em></h2>
-              <p>DlaWas.fun to nie tylko fotobudka. Możecie wybrać pojedynczą usługę albo zbudować z nami pełną oprawę wydarzenia. Każdy element dopasowujemy do miejsca, liczby gości i charakteru imprezy.</p>
+              <p>dlawas.fun to nie tylko fotobudka. Możecie wybrać pojedynczą usługę albo zbudować z nami pełną oprawę wydarzenia. Każdy element dopasowujemy do miejsca, liczby gości i charakteru imprezy.</p>
             </div>
           </div>
 
@@ -413,16 +421,16 @@ export default function Home() {
                 <div className="musicAttractionCopy">
                   <span className="attractionLabel">DJ-e i wodzireje</span>
                   <h3>Oprawa muzyczna</h3>
-                  <p>DlaWas.fun zapewnia kompleksową obsługę muzyczną wesel i eventów. Doświadczenie, wyczucie parkietu oraz światło i dźwięk dopasowane do miejsca budują energię od pierwszego utworu do finału.</p>
+                  <p>dlawas.fun zapewnia kompleksową obsługę muzyczną wesel i eventów. Doświadczenie, wyczucie parkietu oraz światło i dźwięk dopasowane do miejsca budują energię od pierwszego utworu do finału.</p>
                   <a href="#kontakt">Zapytaj o oprawę <span><ArrowUpRightIcon /></span></a>
                 </div>
               </div>
 
-              <div className="musicTeam" aria-label="DJ-e i wodzireje DlaWas.fun">
+              <div className="musicTeam" aria-label="DJ-e i wodzireje dlawas.fun">
                 {musicTeam.map((person) => (
                   <article className="musicPerson" key={person.name}>
                     <div className="musicPersonPhoto">
-                      <Image src={person.image} alt={`${person.name} — DJ i wodzirej DlaWas.fun`} fill sizes="(max-width: 767px) 42vw, (max-width: 1200px) 22vw, 260px" />
+                      <Image src={person.image} alt={`${person.name} — DJ i wodzirej dlawas.fun`} fill sizes="(max-width: 767px) 42vw, (max-width: 1200px) 22vw, 260px" />
                     </div>
                     <div className="musicPersonCopy">
                       <span>Oprawa muzyczna</span>
@@ -482,7 +490,7 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="attractionCard">
+            <article className="attractionCard attractionCardHalf">
               <div className="attractionMedia">
                 <img src="/media/attractions/saksofonista.webp" alt="Saksofonista grający podczas przyjęcia" loading="lazy" />
                 <span className="attractionIndex">05</span>
@@ -498,7 +506,7 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="attractionCard">
+            <article className="attractionCard attractionCardHalf">
               <div className="attractionMedia">
                 <img src="/media/attractions/love.webp" alt="Podświetlany napis LOVE na czarnym tle" loading="lazy" />
                 <span className="attractionIndex">06</span>
@@ -543,7 +551,7 @@ export default function Home() {
                     <i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
                   </a>
                 </div>
-                <div className="contactSocials" aria-label="DlaWas.fun w internecie">
+                <div className="contactSocials" aria-label="dlawas.fun w internecie">
                   <span>Znajdźcie nas</span>
                   <div>
                     <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer">Instagram <b><ArrowUpRightIcon /></b></a>
@@ -564,7 +572,7 @@ export default function Home() {
                   <li><span>02</span><p><strong>Miejsce</strong>Miasto lub nazwa sali</p></li>
                   <li><span>03</span><p><strong>Plan imprezy</strong>Rodzaj wydarzenia i wybrane atrakcje</p></li>
                 </ol>
-                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20DlaWas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0AWybrane%20atrakcje%3A" className="primaryButton contactWrite">
+                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0AWybrane%20atrakcje%3A" className="primaryButton contactWrite">
                   <span>Napisz wiadomość</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
@@ -572,9 +580,9 @@ export default function Home() {
             </div>
 
             <footer className="siteFooter">
-              <a href="#start" aria-label="Wróć na początek"><img src="/logo-dlawas-fun-nav.png" alt="DlaWas.fun" /></a>
+              <a href="#start" aria-label="Wróć na początek"><img src="/logo-dlawas-fun-nav.png" alt="dlawas.fun" /></a>
               <p>DJ • Fotobudka 360° • Oprawa wydarzeń</p>
-              <div><span>© 2026 DlaWas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
+              <div><span>© 2026 dlawas.fun</span><a href="#start">Wróć na górę <ArrowUpIcon /></a></div>
             </footer>
           </section>
         </div>

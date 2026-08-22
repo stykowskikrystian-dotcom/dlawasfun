@@ -3,10 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.dlawas.fun"),
-  title: "Fotobudka 360° | DlaWas.fun",
+  title: "Fotobudka 360° | dlawas.fun",
   description: "Fotobudka 360° na wesela, eventy i imprezy. Dynamiczne klipy, efekty slow motion i szybki odbiór filmu na telefon.",
   openGraph: {
-    title: "Fotobudka 360° | DlaWas.fun",
+    title: "Fotobudka 360° | dlawas.fun",
     description: "Twoja impreza w pełnym obrocie. Dynamiczne klipy 360° gotowe do udostępnienia.",
     type: "website",
     images: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fotobudka 360° | DlaWas.fun",
+    title: "Fotobudka 360° | dlawas.fun",
     description: "Twoja impreza w pełnym obrocie.",
     images: ["/og.png"],
   },
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "DlaWas.fun",
+  name: "dlawas.fun",
   url: "https://www.dlawas.fun/",
   logo: "https://www.dlawas.fun/google-logo.png",
   telephone: "+48 780 059 216",

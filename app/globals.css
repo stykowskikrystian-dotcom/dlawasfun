@@ -73,11 +73,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .experienceGrid { display: grid; grid-template-columns: minmax(0,1.28fr) minmax(330px,.72fr); gap: 18px; margin-top: clamp(58px,7vw,96px); }
 .experiencePhoto { position: relative; min-height: 590px; margin: 0; overflow: hidden; border-radius: 28px; background: #09070d; isolation: isolate; }
-.experiencePhotoMain::before { content: ""; position: absolute; z-index: -1; inset: -25px; background: url("/media/how-it-works/experience-queue-poster.jpg") center / cover no-repeat; filter: blur(18px); opacity: .48; transform: scale(1.08); }
-.experiencePhoto::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(5,4,9,.86)); pointer-events: none; }
-.experiencePhoto > img, .experiencePhoto > video, .partyImage img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
-.experiencePhoto > video { position: absolute; z-index: 1; inset: 0; display: block; object-fit: contain; }
-.experiencePhoto:hover > img, .experiencePhoto:hover > video, .partyImage:hover img { transform: scale(1.035); }
+.experiencePhoto::after { content: ""; position: absolute; z-index: 2; inset: 0; background: linear-gradient(180deg,transparent 48%,rgba(5,4,9,.88)); pointer-events: none; }
+.experienceReel { position: absolute; z-index: 1; inset: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2px; overflow: hidden; background: #09070d; }
+.experienceReel video { display: block; width: 100%; height: 100%; min-width: 0; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1),filter 500ms ease; }
+.experiencePhoto:hover .experienceReel video { filter: saturate(1.08); transform: scale(1.025); }
+.partyImage img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(.2,.7,.2,1); }
+.partyImage:hover img { transform: scale(1.035); }
 .experiencePhoto figcaption { position: absolute; z-index: 3; left: 30px; right: 30px; bottom: 27px; display: flex; align-items: end; justify-content: flex-end; gap: 30px; }
 .experiencePhoto figcaption strong { max-width: 370px; font-size: clamp(22px,2.3vw,34px); line-height: 1.02; letter-spacing: -.04em; text-align: right; }
 .experiencePitch { position: relative; display: flex; min-height: 590px; flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(32px,4vw,58px); border: 1px solid rgba(255,255,255,.13); border-radius: 28px; background: linear-gradient(145deg, rgba(143,85,255,.2), rgba(15,12,22,.94) 48%), #0e0b14; }
@@ -194,15 +195,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .musicPersonCopy h4 { margin: 10px 0 0; font-size: 27px; line-height: 1; letter-spacing: -.045em; text-transform: uppercase; }
 .musicPersonCopy p { margin: 16px 0 0; color: rgba(255,255,255,.57); font-size: 12px; line-height: 1.62; }
 .attractionCard { position: relative; grid-column: span 4; display: flex; min-width: 0; min-height: 570px; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 27px; background: linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)); box-shadow: 0 22px 65px rgba(0,0,0,.2); transition: transform 260ms cubic-bezier(.2,.7,.2,1), border-color 260ms ease, box-shadow 260ms ease; }
+.attractionCardHalf { grid-column: span 6; }
 .attractionCardWide { grid-column: span 8; display: grid; grid-template-columns: minmax(0,1.08fr) minmax(300px,.92fr); min-height: 470px; }
 .attractionCardFinal { background: linear-gradient(135deg,rgba(143,85,255,.12),rgba(255,47,168,.055) 55%,rgba(217,255,67,.035)); }
 .attractionCard:hover { border-color: rgba(217,255,67,.38); box-shadow: 0 34px 90px rgba(0,0,0,.35); transform: translateY(-6px); }
-.attractionMedia { position: relative; min-height: 280px; overflow: hidden; background: #15111d; isolation: isolate; }
+.attractionMedia { position: relative; height: 300px; min-height: 300px; flex: 0 0 300px; overflow: hidden; background: #15111d; isolation: isolate; }
 .attractionCardWide .attractionMedia { min-height: 100%; }
 .attractionMedia::before { content: ""; position: absolute; z-index: 2; top: -35%; bottom: -35%; left: -40%; width: 25%; pointer-events: none; background: linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent); opacity: 0; transform: rotate(15deg); }
 .attractionCard:hover .attractionMedia::before { opacity: 1; animation: attractionSweep 1s ease both; }
 .attractionMedia::after { content: ""; position: absolute; z-index: 1; inset: 0; pointer-events: none; background: linear-gradient(180deg,rgba(5,4,9,.08),rgba(5,4,9,.05) 45%,rgba(5,4,9,.86)); }
-.attractionMedia img { display: block; width: 100%; height: 100%; min-height: 280px; object-fit: cover; transition: transform 900ms cubic-bezier(.2,.7,.2,1), filter 600ms ease; }
+.attractionMedia img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; transition: transform 900ms cubic-bezier(.2,.7,.2,1), filter 600ms ease; }
 .attractionCardWide .attractionMedia img { min-height: 470px; }
 .attractionCard:hover .attractionMedia img { filter: saturate(1.08) contrast(1.04); transform: scale(1.055); }
 .attractionIndex { position: absolute; z-index: 3; top: 20px; left: 20px; display: grid; min-width: 52px; height: 36px; padding: 0 13px; place-items: center; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(8,7,12,.48); backdrop-filter: blur(12px); font-size: 10px; font-weight: 900; letter-spacing: .14em; }
@@ -322,6 +324,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .musicTeam { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .musicPersonPhoto { min-height: 330px; }
   .attractionCard { grid-column: span 3; }
+  .attractionCardHalf { grid-column: span 3; }
   .attractionCardWide { grid-column: span 6; }
   .attractionsOutro { grid-template-columns: 1fr 1fr; }
   .attractionsOutro .primaryButton { width: max-content; }
@@ -372,6 +375,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .howLead { font-size: 15px; line-height: 1.58; }
   .experienceGrid { margin-top: 48px; }
   .experiencePhoto { min-height: 470px; border-radius: 20px; }
+  .experienceReel { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .experienceClipDesktop { display: none !important; }
   .experiencePhoto img { object-position: 53% center; }
   .experiencePhoto figcaption { left: 20px; right: 20px; bottom: 20px; display: block; }
   .experiencePhoto figcaption strong { display: block; max-width: 290px; margin-top: 8px; font-size: 25px; text-align: left; }
@@ -394,6 +399,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .partyProof { gap: 76px; margin-top: 92px; }
   .partyCollage { min-height: 510px; }
   .partyImageOne { right: 18%; bottom: 16%; }
+  .partyImageOne img { object-position: center 35%; }
   .partyVideo { top: 38%; left: 34%; border-width: 5px; border-radius: 21px; }
   .orbitBadge { top: 5%; right: 0; width: 112px; height: 112px; box-shadow: 0 0 0 6px rgba(217,255,67,.045), 0 18px 52px rgba(0,0,0,.46); }
   .orbitBadge::before { inset: 7px; }
@@ -434,8 +440,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .musicPersonCopy p { margin-top: 13px; font-size: 11px; line-height: 1.55; }
   .attractionCard, .attractionCardWide { grid-column: auto; display: flex; min-height: 0; border-radius: 21px; }
   .attractionCard:hover { transform: none; }
-  .attractionMedia, .attractionCardWide .attractionMedia { min-height: 235px; }
-  .attractionMedia img, .attractionCardWide .attractionMedia img { min-height: 235px; }
+  .attractionMedia, .attractionCardWide .attractionMedia { height: 235px; min-height: 235px; flex-basis: 235px; }
+  .attractionMedia img, .attractionCardWide .attractionMedia img { min-height: 0; }
   .attractionIndex { top: 15px; left: 15px; min-width: 46px; height: 34px; padding: 0 11px; font-size: 9px; }
   .attractionIcon { top: 14px; right: 14px; width: 60px; height: 60px; }
   .attractionIcon::after { inset: 6px; }

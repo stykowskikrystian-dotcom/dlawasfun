@@ -198,9 +198,9 @@ export default function Home() {
         <div className="heroGrain" aria-hidden="true" />
 
         <div className="heroContent" id="start">
-          <p className="eyebrow"><span /> Fotobudka 360° • Eventy • Wesela</p>
+          <p className="eyebrow"><span /> Fotobudka 360° • Mazury • Eventy • Wesela</p>
           <h1>Twoja impreza<br /><em>W pełnym obrocie</em></h1>
-          <p className="heroLead">Dynamiczne klipy 360°, efektowne slow motion i gotowy film prosto na telefon jeszcze w trakcie imprezy.</p>
+          <p className="heroLead">Dynamiczne klipy 360°, efektowne slow motion i gotowy film prosto na telefon jeszcze w trakcie imprezy. Obsługujemy Giżycko, Mikołajki, Ryn, Mrągowo i całe Mazury.</p>
           <div className="heroActions">
             <a className="primaryButton" href="#kontakt">
               <span>Zarezerwuj fotobudkę</span>
@@ -328,7 +328,7 @@ export default function Home() {
             <p className="sectionKicker"><span>04</span> Więcej o nas</p>
             <div className="offerIntroCopy">
               <h2>Od pierwszego bitu<br /><em>do ostatniego światła</em></h2>
-              <p>dlawas.fun to nie tylko fotobudka. Możecie wybrać pojedynczą usługę albo zbudować z nami pełną oprawę wydarzenia. Każdy element dopasowujemy do miejsca, liczby gości i charakteru imprezy.</p>
+              <p>dlawas.fun to nie tylko fotobudka. W Giżycku, Mikołajkach, Rynie, Mrągowie i całym regionie zapewniamy fotobudkę 360 oraz kompleksową oprawę imprez na Mazurach: DJ-a, wodzireja, nagłośnienie i oświetlenie. Każdy element dopasowujemy do miejsca, liczby gości i charakteru wydarzenia.</p>
             </div>
           </div>
 

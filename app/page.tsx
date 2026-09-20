@@ -4,6 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+const availableServices = [
+  { id: "fotobudka-360", name: "Fotobudka 360°" },
+  { id: "oprawa-muzyczna", name: "Oprawa muzyczna" },
+  { id: "fontanna-iskier", name: "Fontanna iskier" },
+  { id: "dekoracja-swiatlem", name: "Dekoracja światłem" },
+  { id: "ciezki-dym", name: "Ciężki dym" },
+  { id: "saksofonista", name: "Saksofonista" },
+  { id: "napis-love", name: "Napis LOVE" },
+] as const;
+
+type ServiceId = (typeof availableServices)[number]["id"];
+
+const serviceCartStorageKey = "dlawasfun-service-cart-v1";
+
+function trackAnalyticsEvent(eventName: string, eventParameters: Record<string, string | number>) {
+  if (typeof window === "undefined") return;
+  const analyticsWindow = window as typeof window & { gtag?: (...args: unknown[]) => void };
+  analyticsWindow.gtag?.("event", eventName, eventParameters);
+}
+
 const musicTeam = [
   {
     name: "Paweł",
@@ -59,6 +79,24 @@ function ArrowUpIcon() {
     <svg className="inlineArrowIcon" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 19V5M6 11l6-6 6 6" />
     </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5h2l1.6 9.1a2 2 0 0 0 2 1.7h7.8a2 2 0 0 0 1.9-1.5L21 8H7" />
+      <circle cx="10" cy="19" r="1.3" /><circle cx="18" cy="19" r="1.3" />
+    </svg>
+  );
+}
+
+function ServiceAddButton({ serviceId, selected, onToggle }: { serviceId: ServiceId; selected: boolean; onToggle: (serviceId: ServiceId) => void }) {
+  return (
+    <button className={`serviceAddButton${selected ? " isSelected" : ""}`} type="button" aria-pressed={selected} onClick={() => onToggle(serviceId)}>
+      {selected ? "Dodano do wydarzenia" : "Dodaj do wydarzenia"}
+      <span aria-hidden="true">{selected ? "✓" : <ArrowUpRightIcon />}</span>
+    </button>
   );
 }
 
@@ -124,6 +162,54 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reviewsRailRef = useRef<HTMLDivElement>(null);
   const [soundOn, setSoundOn] = useState(false);
+  const [selectedServiceIds, setSelectedServiceIds] = useState<ServiceId[]>([]);
+  const [cartHydrated, setCartHydrated] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [eventDate, setEventDate] = useState("");
+  const [eventPlace, setEventPlace] = useState("");
+  const [eventIdea, setEventIdea] = useState("");
+
+  const selectedServices = availableServices.filter((service) => selectedServiceIds.includes(service.id));
+  const selectedServiceList = selectedServices.length
+    ? selectedServices.map((service) => `- ${service.name}`).join("\n")
+    : "- Jeszcze nie wybrano — podpowiedzcie nam, czego potrzebujecie.";
+  const emailBody = `Dzień dobry,\n\nproszę o informację dotyczącą organizacji wydarzenia.\n\nTermin: ${eventDate || "do ustalenia"}\nMiejsce i goście: ${eventPlace || "do uzupełnienia"}\nWasz pomysł: ${eventIdea || "do uzupełnienia"}\n\nWybrane usługi:\n${selectedServiceList}\n`;
+  const emailHref = `mailto:kontakt@dlawas.fun?subject=${encodeURIComponent("Zapytanie o termin - dlawas.fun")}&body=${encodeURIComponent(emailBody)}`;
+
+  useEffect(() => {
+    const hydrateCart = window.setTimeout(() => {
+      try {
+        const storedCart = JSON.parse(localStorage.getItem(serviceCartStorageKey) ?? "[]");
+        if (Array.isArray(storedCart)) {
+          const validIds = storedCart.filter((id): id is ServiceId => availableServices.some((service) => service.id === id));
+          setSelectedServiceIds([...new Set(validIds)]);
+        }
+      } catch {
+        localStorage.removeItem(serviceCartStorageKey);
+      }
+      setCartHydrated(true);
+    }, 0);
+    return () => window.clearTimeout(hydrateCart);
+  }, []);
+
+  useEffect(() => {
+    if (!cartHydrated) return;
+    localStorage.setItem(serviceCartStorageKey, JSON.stringify(selectedServiceIds));
+  }, [cartHydrated, selectedServiceIds]);
+
+  useEffect(() => {
+    if (!cartOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setCartOpen(false);
+    };
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [cartOpen]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -175,11 +261,33 @@ export default function Home() {
     rail.scrollBy({ left: direction * Math.min(rail.clientWidth * 0.82, 860), behavior: "smooth" });
   };
 
+  const toggleService = (serviceId: ServiceId) => {
+    const service = availableServices.find((item) => item.id === serviceId);
+    setSelectedServiceIds((currentIds) => {
+      const isSelected = currentIds.includes(serviceId);
+      trackAnalyticsEvent(isSelected ? "remove_from_cart" : "add_to_cart", {
+        item_id: serviceId,
+        item_name: service?.name ?? serviceId,
+      });
+      return isSelected ? currentIds.filter((id) => id !== serviceId) : [...currentIds, serviceId];
+    });
+  };
+
+  const openCart = () => {
+    setCartOpen(true);
+    trackAnalyticsEvent("view_cart", { items_count: selectedServiceIds.length });
+  };
+
+  const handleEmailClick = () => {
+    trackAnalyticsEvent("generate_lead", { selected_services: selectedServiceIds.length, contact_method: "email" });
+  };
+
   return (
     <main>
       <header className="siteHeader">
         <a className="brand" href="#start" aria-label="dlawas.fun, strona główna">
-          <img className="brandLogo" src="/logo-dlawas-fun-nav.png" alt="dlawas.fun" />
+          <img className="brandLogo" src="/logo-dlawas-fun-main.png" alt="dlawas.fun" />
+          <img className="brand360Logo" src="/logo-fotobudka-360-clean.png" alt="Fotobudka 360" />
         </a>
 
         <nav className="desktopNav" aria-label="Główna nawigacja">
@@ -192,6 +300,10 @@ export default function Home() {
         </nav>
 
         <div className="headerSocials" aria-label="Kontakt i media społecznościowe">
+          <button className="headerCartButton" type="button" onClick={openCart} aria-label={`Otwórz koszyk usług. Wybrano: ${selectedServiceIds.length}`} title="Twój zestaw usług">
+            <CartIcon />
+            <span className="headerCartCount" aria-hidden="true">{selectedServiceIds.length}</span>
+          </button>
           <a href="tel:+48780059216" aria-label="Zadzwoń: 780 059 216" title="780 059 216">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 7.8 8.2 9.6c1.3 2.6 3.5 4.8 6.1 6.1l1.8-1.8 4.3 2.8c.4.3.6.8.5 1.3l-.5 2.2c-.1.5-.6.8-1.1.8C10.3 21 3 13.7 3 4.7c0-.5.3-1 .8-1.1L6 3.1c.5-.1 1 .1 1.2.4Z" /></svg>
           </a>
@@ -201,7 +313,7 @@ export default function Home() {
           <a href="https://www.instagram.com/dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Instagram dlawas.fun" title="Instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle className="socialDot" cx="17.4" cy="6.7" r="1" /></svg>
           </a>
-          <a href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer" aria-label="Facebook dlawas.fun" title="Facebook">
+          <a className="facebookShortcut" href="https://www.facebook.com/p/Dlawasfun-61572704770269/" target="_blank" rel="noreferrer" aria-label="Facebook dlawas.fun" title="Facebook">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path className="socialFill" d="M13.6 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4V13h2.8v8h3.4Z" /></svg>
           </a>
           <a className="websiteShortcut" href="https://www.dlawas.fun/" target="_blank" rel="noreferrer" aria-label="Otwórz stronę dlawas.fun" title="dlawas.fun">
@@ -226,12 +338,17 @@ export default function Home() {
         <div className="heroGrain" aria-hidden="true" />
 
         <div className="heroContent" id="start">
-          <p className="eyebrow"><span /> Fotobudka 360° • Mazury • Eventy • Wesela</p>
+          <p className="eyebrow"><span aria-hidden="true" /><strong>Fotobudka 360° • Mazury • Eventy • Wesela</strong></p>
+          <div className="heroBrandMark" aria-hidden="true">
+            <img src="/logo-fotobudka-360-clean.png" alt="" />
+          </div>
           <h1>Twoja impreza<br /><em>W pełnym obrocie</em></h1>
           <p className="heroLead">Dynamiczne klipy 360°, efektowne slow motion i gotowy film prosto na telefon jeszcze w trakcie imprezy. Obsługujemy Giżycko, Mikołajki, Ryn, Mrągowo i całe Mazury.</p>
           <div className="heroActions">
-            <a className="primaryButton" href="#kontakt">
-              <span>Zarezerwuj fotobudkę</span>
+            <a className="primaryButton" href="#kontakt" onClick={() => {
+              if (!selectedServiceIds.includes("fotobudka-360")) toggleService("fotobudka-360");
+            }}>
+              <span>Zarezerwuj fotobudkę 360°</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
             <a className="textButton" href="#jak-to-dziala">Zobacz, jak to działa</a>
@@ -276,7 +393,7 @@ export default function Home() {
                 <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-guest-a-poster.jpg" aria-label="Goście nagrywający klip w fotobudce 360">
                   <source src="/media/how-it-works/experience-guest-a.mp4" type="video/mp4" />
                 </video>
-                <video autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-queue-poster.jpg" aria-label="Goście tańczący na platformie fotobudki 360">
+                <video autoPlay muted loop playsInline preload="auto" aria-label="Goście tańczący na platformie fotobudki 360">
                   <source src="/media/how-it-works/experience-queue.mp4" type="video/mp4" />
                 </video>
                 <video className="experienceClipDesktop" autoPlay muted loop playsInline preload="metadata" poster="/media/how-it-works/experience-guest-b-poster.jpg" aria-label="Kolejny klip nagrywany w fotobudce 360">
@@ -450,7 +567,7 @@ export default function Home() {
                   <span className="attractionLabel">DJ-e i wodzireje</span>
                   <h3>Oprawa muzyczna</h3>
                   <p>dlawas.fun zapewnia kompleksową obsługę muzyczną wesel i eventów. Doświadczenie, wyczucie parkietu oraz światło i dźwięk dopasowane do miejsca budują energię od pierwszego utworu do finału.</p>
-                  <a href="#kontakt">Zapytaj o oprawę <span><ArrowUpRightIcon /></span></a>
+                  <ServiceAddButton serviceId="oprawa-muzyczna" selected={selectedServiceIds.includes("oprawa-muzyczna")} onToggle={toggleService} />
                 </div>
               </div>
 
@@ -482,7 +599,7 @@ export default function Home() {
                 <span className="attractionLabel">Efekt wow</span>
                 <h3>Fontanna iskier</h3>
                 <p>Spektakularna oprawa pierwszego tańca, wejścia lub kulminacyjnego momentu. Zimne iskry dają widowiskowy efekt na żywo i świetnie wyglądają na filmach.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+                <ServiceAddButton serviceId="fontanna-iskier" selected={selectedServiceIds.includes("fontanna-iskier")} onToggle={toggleService} />
               </div>
             </article>
 
@@ -498,7 +615,7 @@ export default function Home() {
                 <span className="attractionLabel">Klimat</span>
                 <h3>Dekoracja światłem</h3>
                 <p>Kolorem i światłem podkreślamy architekturę sali, strefę Pary Młodej oraz parkiet. Całość dopasowujemy do motywu przewodniego i rytmu imprezy.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+                <ServiceAddButton serviceId="dekoracja-swiatlem" selected={selectedServiceIds.includes("dekoracja-swiatlem")} onToggle={toggleService} />
               </div>
             </article>
 
@@ -514,7 +631,7 @@ export default function Home() {
                 <span className="attractionLabel">Pierwszy taniec</span>
                 <h3>Ciężki dym</h3>
                 <p>Gęsta chmura utrzymuje się nisko nad parkietem i tworzy efekt tańca w obłokach. To eleganckie tło dla pierwszego tańca oraz wyjątkowych ujęć.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+                <ServiceAddButton serviceId="ciezki-dym" selected={selectedServiceIds.includes("ciezki-dym")} onToggle={toggleService} />
               </div>
             </article>
 
@@ -530,7 +647,7 @@ export default function Home() {
                 <span className="attractionLabel">Na żywo</span>
                 <h3>Saksofonista</h3>
                 <p>Brzmienie saksofonu dodaje elegancji ceremonii, kolacji i pierwszemu tańcowi, a później świetnie łączy się z setem DJ-a. Repertuar i charakter występu dopasowujemy do momentu wydarzenia.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+                <ServiceAddButton serviceId="saksofonista" selected={selectedServiceIds.includes("saksofonista")} onToggle={toggleService} />
               </div>
             </article>
 
@@ -546,7 +663,7 @@ export default function Home() {
                 <span className="attractionLabel">Dekoracja</span>
                 <h3>Napis LOVE</h3>
                 <p>Świetlny napis staje się mocnym punktem sali i naturalnym tłem do zdjęć. Dodaje ciepła aranżacji i jest widoczny przez całe przyjęcie.</p>
-                <a href="#kontakt">Dodaj do wydarzenia <span><ArrowUpRightIcon /></span></a>
+                <ServiceAddButton serviceId="napis-love" selected={selectedServiceIds.includes("napis-love")} onToggle={toggleService} />
               </div>
             </article>
 
@@ -618,7 +735,7 @@ export default function Home() {
                 <span><small>Najprościej i najszybciej</small><strong>Zadzwoń teraz</strong><em>780 059 216</em></span>
                 <b aria-hidden="true"><ArrowUpRightIcon /></b>
               </a>
-              <a className="contactQuickAction" href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20-%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" aria-label="Napisz e-mail i zapytaj o termin">
+              <a className="contactQuickAction" href={emailHref} onClick={handleEmailClick} aria-label="Napisz e-mail i zapytaj o termin">
                 <i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
                 <span><small>Macie już datę?</small><strong>Zapytaj o termin</strong><em>kontakt@dlawas.fun</em></span>
                 <b aria-hidden="true"><ArrowUpRightIcon /></b>
@@ -659,12 +776,21 @@ export default function Home() {
                 </div>
                 <p className="contactBriefLabel">Wystarczy krótka wiadomość</p>
                 <h3>Dajcie nam dobry punkt startu</h3>
+                <div className={`contactCartSummary${selectedServices.length ? " hasItems" : ""}`}>
+                  <div><span>Wasz zestaw</span><b>{selectedServices.length}</b></div>
+                  {selectedServices.length ? (
+                    <ul>{selectedServices.map((service) => <li key={service.id}>{service.name}</li>)}</ul>
+                  ) : (
+                    <p>Dodajcie usługi powyżej — pojawią się tutaj i w gotowej wiadomości.</p>
+                  )}
+                  <button type="button" onClick={openCart}>Edytuj zestaw</button>
+                </div>
                 <ol>
                   <li><span>01</span><p><strong>Termin</strong>Data wydarzenia</p></li>
                   <li><span>02</span><p><strong>Miejsce i goście</strong>Miasto, sala i orientacyjna liczba osób</p></li>
-                  <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i interesujące usługi</p></li>
+                  <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i wybrane usługi — już dodamy je do wiadomości</p></li>
                 </ol>
-                <a href="mailto:kontakt@dlawas.fun?subject=Zapytanie%20o%20termin%20-%20dlawas.fun&body=Termin%3A%0AMiejsce%3A%0ARodzaj%20wydarzenia%3A%0ALiczba%20go%C5%9Bci%3A%0AInteresuj%C4%85ce%20us%C5%82ugi%3A%0A%0AKilka%20s%C5%82%C3%B3w%20o%20wydarzeniu%3A" className="primaryButton contactWrite">
+                <a href={emailHref} onClick={handleEmailClick} className="primaryButton contactWrite">
                   <span>Przygotuj wiadomość</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                 </a>
@@ -696,13 +822,16 @@ export default function Home() {
 
           <aside className="hostCreditBar" aria-label="Autor projektu strony">
             <a className="hostCreditBrand" href="https://www.hostcontrol.pl/" target="_blank" rel="noreferrer" aria-label="Projekt strony: HostControl Krystian Stykowski">
-              <Image className="hostCreditLogo" src="/hostcontrol-logo.svg" alt="" width={40} height={40} />
-              <span className="hostCreditText">Zaprojektowano przez <strong>HostControl</strong> Krystian Stykowski</span>
+              <Image className="hostCreditLogo" src="/hostcontrol-mark.png" alt="" width={64} height={64} />
+              <span className="hostCreditText">
+                <small>Projekt i realizacja</small>
+                <span><strong>HostControl</strong><em>Krystian Stykowski</em></span>
+              </span>
             </a>
             <div className="hostCreditActions">
-              <a href="tel:+48692746031" aria-label="Zadzwoń do HostControl: 692 746 031">
+              <a href="tel:+48723712365" aria-label="Zadzwoń do HostControl: 723 712 365">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 3.5 10 7.8 8.2 9.6c1.3 2.6 3.5 4.8 6.1 6.1l1.8-1.8 4.3 2.8c.4.3.6.8.5 1.3l-.5 2.2c-.1.5-.6.8-1.1.8C10.3 21 3 13.7 3 4.7c0-.5.3-1 .8-1.1L6 3.1c.5-.1 1 .1 1.2.4Z" /></svg>
-                <span>692 746 031</span>
+                <span>723 712 365</span>
               </a>
               <a className="hostCreditInstagram" href="https://www.instagram.com/much4ty" target="_blank" rel="noreferrer" aria-label="Instagram HostControl, much4ty">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.7" r="1" /></svg>
@@ -710,7 +839,67 @@ export default function Home() {
             </div>
           </aside>
         </div>
-      </section>
+          </section>
+
+          {cartOpen && (
+            <div className="serviceCartOverlay" role="presentation" onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setCartOpen(false);
+            }}>
+              <aside className="serviceCartPanel" role="dialog" aria-modal="true" aria-labelledby="service-cart-title">
+                <div className="serviceCartHeader">
+                  <div>
+                    <span>Wasze wydarzenie</span>
+                    <h2 id="service-cart-title">Wybrane usługi</h2>
+                  </div>
+                  <button type="button" onClick={() => setCartOpen(false)} aria-label="Zamknij koszyk" autoFocus>×</button>
+                </div>
+                <div className="serviceCartBody">
+                  {selectedServices.length ? (
+                    <ul>
+                      {selectedServices.map((service, index) => (
+                        <li key={service.id}>
+                          <span>{String(index + 1).padStart(2, "0")}</span>
+                          <strong>{service.name}</strong>
+                          <button type="button" onClick={() => toggleService(service.id)} aria-label={`Usuń usługę: ${service.name}`}>Usuń</button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="serviceCartEmpty"><CartIcon /><strong>Wasz zestaw jest pusty</strong><p>Wybierzcie atrakcje w sekcji „Inne atrakcje” albo dodajcie fotobudkę 360°.</p></div>
+                  )}
+
+                  <div className="serviceCartDetails" aria-label="Dane wydarzenia">
+                    <div className="serviceCartDetailsIntro">
+                      <span>Krótka wiadomość wystarczy</span>
+                      <h3>Dajcie nam dobry punkt startu</h3>
+                    </div>
+                    <label>
+                      <span><b>01</b> Termin</span>
+                      <input type="date" value={eventDate} onInput={(event) => setEventDate(event.currentTarget.value)} />
+                    </label>
+                    <label>
+                      <span><b>02</b> Miejsce i goście</span>
+                      <textarea value={eventPlace} onChange={(event) => setEventPlace(event.target.value)} rows={2} placeholder="Miasto, sala i orientacyjna liczba osób" />
+                    </label>
+                    <label>
+                      <span><b>03</b> Wasz pomysł</span>
+                      <textarea value={eventIdea} onChange={(event) => setEventIdea(event.target.value)} rows={2} placeholder="Rodzaj imprezy i dodatkowe informacje" />
+                    </label>
+                  </div>
+
+                  <a className="serviceCartContact" href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
+                    <Image src="/media/attractions/team/michal.webp" alt="" width={92} height={92} sizes="46px" />
+                    <span><small>Michał • DJ i wodzirej</small><strong>780 059 216</strong></span>
+                    <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
+                  </a>
+                </div>
+                <div className="serviceCartFooter">
+                  <p><span>{selectedServices.length}</span> {selectedServices.length === 1 ? "wybrana usługa" : "wybranych usług"}</p>
+                  <a href={emailHref} onClick={handleEmailClick}>Przygotuj wiadomość <ArrowUpRightIcon /></a>
+                </div>
+              </aside>
+            </div>
+          )}
     </main>
   );
 }

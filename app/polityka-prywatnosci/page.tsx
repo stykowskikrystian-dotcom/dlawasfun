@@ -107,7 +107,9 @@ export default function PrivacyPolicy() {
             <div>
               <p className="privacyLabel">Technologie internetowe</p>
               <h2>Cookies i zewnętrzne odnośniki</h2>
-              <p>W aktualnej wersji serwis nie wykorzystuje własnych cookies marketingowych, systemów remarketingowych, Google Analytics ani piksela Facebooka. Infrastruktura hostingowa i osadzona mapa mogą używać rozwiązań technicznych niezbędnych do bezpieczeństwa, dostarczenia treści i prawidłowego działania usług.</p>
+              <p>Serwis korzysta z Google Analytics 4 (identyfikator pomiaru G-E9YV2PSXZL), usługi dostarczanej przez Google Ireland Limited. Narzędzie pomaga nam zrozumieć, które podstrony są odwiedzane i w jaki sposób użytkownicy korzystają z serwisu. W związku z tym mogą być przetwarzane dane techniczne i statystyczne, takie jak informacje o urządzeniu i przeglądarce, przybliżona lokalizacja, źródło wizyty oraz aktywność na stronie. Google Analytics może wykorzystywać pliki cookies i podobne technologie.</p>
+              <p>Wybór usług zapisujemy lokalnie w pamięci przeglądarki (localStorage), aby koszyk nie znikał po odświeżeniu strony. Informacje te pozostają na urządzeniu użytkownika i nie są wysyłane do nas, dopóki użytkownik sam nie rozpocznie wiadomości e-mail.</p>
+              <p>Dane analityczne mogą być przetwarzane przez Google również poza Europejskim Obszarem Gospodarczym z zastosowaniem mechanizmów wymaganych przez obowiązujące przepisy. Infrastruktura hostingowa i osadzona mapa mogą dodatkowo używać rozwiązań technicznych niezbędnych do bezpieczeństwa, dostarczenia treści i prawidłowego działania usług.</p>
               <p>Odnośniki do Facebooka, Instagrama, Google Maps i głównej strony dlawas.fun prowadzą do zewnętrznych serwisów, które działają według własnych zasad prywatności. Samo kliknięcie takiego odnośnika powoduje przejście poza niniejszy serwis.</p>
             </div>
           </section>

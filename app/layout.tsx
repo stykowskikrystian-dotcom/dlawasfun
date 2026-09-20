@@ -3,6 +3,8 @@ import "./globals.css";
 import GoogleAnalytics from "./GoogleAnalytics";
 
 const siteUrl = "https://dlawasfun.vercel.app";
+const socialImagePath = "/og-social-dlawasfun-360.png";
+const socialImageUrl = `${siteUrl}${socialImagePath}`;
 const seoTitle = "Fotobudka 360 Mazury | Giżycko, Olsztyn, Ełk | dlawas.fun";
 const seoDescription = "Fotobudka 360 na Mazurach: Giżycko, Olsztyn, Ełk, Mikołajki, Mrągowo i okolice. Wesela, eventy, DJ i kompleksowa oprawa imprez dlawas.fun w całej Polsce.";
 
@@ -221,10 +223,10 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     images: [
       {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Fotobudka 360 Mazury, dlawas.fun",
+        url: socialImagePath,
+        width: 1730,
+        height: 909,
+        alt: "dlawas.fun i Fotobudka 360 na Mazurach",
       },
     ],
   },
@@ -232,7 +234,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: seoTitle,
     description: seoDescription,
-    images: ["/og.png"],
+    images: [socialImagePath],
   },
   other: {
     "geo.region": "PL-28",
@@ -261,7 +263,7 @@ const organizationJsonLd = {
       alternateName: "dlawasfun",
       url: siteUrl,
       logo: `${siteUrl}/google-logo.png`,
-      image: `${siteUrl}/og.png`,
+      image: socialImageUrl,
       telephone: "+48 780 059 216",
       email: "kontakt@dlawas.fun",
       description: seoDescription,
@@ -290,11 +292,11 @@ const organizationJsonLd = {
     {
       "@type": "EntertainmentBusiness",
       "@id": `${siteUrl}/#localbusiness`,
-      name: "dlawas.fun — Fotobudka 360 i oprawa imprez",
+      name: "dlawas.fun | Fotobudka 360 i oprawa imprez",
       alternateName: ["dlawasfun", "dlawas.fun", "Fotobudka 360 Mazury"],
       url: siteUrl,
       logo: `${siteUrl}/google-logo.png`,
-      image: `${siteUrl}/og.png`,
+      image: socialImageUrl,
       description: seoDescription,
       telephone: "+48 780 059 216",
       email: "kontakt@dlawas.fun",
@@ -354,13 +356,14 @@ const organizationJsonLd = {
       inLanguage: "pl-PL",
       isPartOf: { "@id": `${siteUrl}/#website` },
       about: { "@id": `${siteUrl}/#organization` },
-      primaryImageOfPage: { "@type": "ImageObject", url: `${siteUrl}/og.png` },
+      primaryImageOfPage: { "@type": "ImageObject", url: socialImageUrl, width: 1730, height: 909 },
     },
     {
       "@type": "Service",
       "@id": `${siteUrl}/#fotobudka-360`,
       name: "Fotobudka 360 Mazury",
       serviceType: "Fotobudka 360 na wesela, eventy i imprezy",
+      image: `${siteUrl}/media/services/fotobudka-360.png`,
       provider: { "@id": `${siteUrl}/#localbusiness` },
       areaServed: nationwideServiceAreas.map((name) => ({ "@type": name === "Polska" || name === "Mazury" ? "AdministrativeArea" : "City", name })),
       url: `${siteUrl}/#jak-to-dziala`,

@@ -171,8 +171,8 @@ export default function Home() {
 
   const selectedServices = availableServices.filter((service) => selectedServiceIds.includes(service.id));
   const selectedServiceList = selectedServices.length
-    ? selectedServices.map((service) => `- ${service.name}`).join("\n")
-    : "- Jeszcze nie wybrano — podpowiedzcie nam, czego potrzebujecie.";
+    ? selectedServices.map((service) => `• ${service.name}`).join("\n")
+    : "• Jeszcze nie wybrano. Podpowiedzcie nam, czego potrzebujecie.";
   const emailBody = `Dzień dobry,\n\nproszę o informację dotyczącą organizacji wydarzenia.\n\nTermin: ${eventDate || "do ustalenia"}\nMiejsce i goście: ${eventPlace || "do uzupełnienia"}\nWasz pomysł: ${eventIdea || "do uzupełnienia"}\n\nWybrane usługi:\n${selectedServiceList}\n`;
   const emailHref = `mailto:kontakt@dlawas.fun?subject=${encodeURIComponent("Zapytanie o termin - dlawas.fun")}&body=${encodeURIComponent(emailBody)}`;
 
@@ -351,7 +351,18 @@ export default function Home() {
               <span>Zarezerwuj fotobudkę 360°</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
             </a>
-            <a className="textButton" href="#jak-to-dziala">Zobacz, jak to działa</a>
+            <div className="heroSecondaryActions">
+              <a className="textButton" href="#jak-to-dziala">Zobacz, jak to działa</a>
+              <button
+                className={`heroCartButton${selectedServiceIds.includes("fotobudka-360") ? " isSelected" : ""}`}
+                type="button"
+                aria-pressed={selectedServiceIds.includes("fotobudka-360")}
+                onClick={() => toggleService("fotobudka-360")}
+              >
+                <CartIcon />
+                <span>{selectedServiceIds.includes("fotobudka-360") ? "Fotobudka jest w koszyku" : "Dodaj fotobudkę do koszyka"}</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -478,13 +489,34 @@ export default function Home() {
           </div>
 
           <div className="serviceGrid">
+            <article className="serviceCard serviceCardPhotoBooth">
+              <div className="serviceMedia">
+                <Image
+                  src="/media/services/fotobudka-360.png"
+                  alt="Goście korzystający z platformy fotobudki 360 podczas eleganckiego przyjęcia"
+                  fill
+                  sizes="(max-width: 767px) 100vw, 58vw"
+                />
+                <div className="serviceMediaTop">
+                  <span className="serviceNumber">01</span>
+                  <div className="serviceIcon serviceIcon360" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="22" rx="11" ry="4" /><path d="M5 22V11M27 22V11M5 11l4-3M27 11l-4-3M8 8h16" /><rect x="13" y="5" width="6" height="9" rx="2" /><path d="M9 25c2 2 4.4 3 7 3s5-1 7-3" /></svg></div>
+                </div>
+              </div>
+              <div className="serviceBody">
+                <span className="serviceEyebrow">Klip, który robi obrót</span>
+                <h3>Fotobudka 360°</h3>
+                <p>Goście wchodzą na platformę, a obracające się ramię kamery nagrywa dynamiczny klip z każdej strony. Dodajemy slow motion, muzykę i efektowną oprawę, a gotowy film można odebrać na telefon jeszcze podczas imprezy.</p>
+                <ServiceAddButton serviceId="fotobudka-360" selected={selectedServiceIds.includes("fotobudka-360")} onToggle={toggleService} />
+              </div>
+            </article>
+
             <article className="serviceCard serviceCardFeatured">
               <div className="serviceMedia">
                 <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/wesela.jpg" aria-label="Goście bawiący się podczas wesela">
                   <source src="/media/services/wesela.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">01</span>
+                  <span className="serviceNumber">02</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12.5" cy="18" r="6.5" /><circle cx="19.5" cy="18" r="6.5" /><path d="m16 3 1.1 3 3 1.1-3 1.1-1.1 3-1.1-3-3-1.1 3-1.1L16 3Z" /></svg></div>
                 </div>
               </div>
@@ -501,7 +533,7 @@ export default function Home() {
                   <source src="/media/services/eventy.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">02</span>
+                  <span className="serviceNumber">03</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26h22M8 26v-8h16v8M10 18l6-9 6 9" /><circle cx="7" cy="7" r="2" /><circle cx="25" cy="7" r="2" /><path d="m8.5 8.5 5 7M23.5 8.5l-5 7M16 4v5" /></svg></div>
                 </div>
               </div>
@@ -518,7 +550,7 @@ export default function Home() {
                   <source src="/media/services/naglosnienie.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">03</span>
+                  <span className="serviceNumber">04</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="8" y="3.5" width="16" height="25" rx="3" /><circle cx="16" cy="11" r="3" /><circle cx="16" cy="21" r="5" /><path d="M4.5 10c-2 3.5-2 8.5 0 12M27.5 10c2 3.5 2 8.5 0 12" /></svg></div>
                 </div>
               </div>
@@ -535,7 +567,7 @@ export default function Home() {
                   <source src="/media/services/animacje.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">04</span>
+                  <span className="serviceNumber">05</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="14" cy="7" r="3" /><path d="m14 11-4 5 5 3-2 9M14 12l5 4 5-3M16 19l5 8" /><path d="m25 4 .8 2.2L28 7l-2.2.8L25 10l-.8-2.2L22 7l2.2-.8L25 4ZM6 20l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z" /></svg></div>
                 </div>
               </div>
@@ -781,14 +813,14 @@ export default function Home() {
                   {selectedServices.length ? (
                     <ul>{selectedServices.map((service) => <li key={service.id}>{service.name}</li>)}</ul>
                   ) : (
-                    <p>Dodajcie usługi powyżej — pojawią się tutaj i w gotowej wiadomości.</p>
+                    <p>Dodajcie usługi powyżej. Pojawią się tutaj i w gotowej wiadomości.</p>
                   )}
                   <button type="button" onClick={openCart}>Edytuj zestaw</button>
                 </div>
                 <ol>
                   <li><span>01</span><p><strong>Termin</strong>Data wydarzenia</p></li>
                   <li><span>02</span><p><strong>Miejsce i goście</strong>Miasto, sala i orientacyjna liczba osób</p></li>
-                  <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i wybrane usługi — już dodamy je do wiadomości</p></li>
+                  <li><span>03</span><p><strong>Wasz pomysł</strong>Rodzaj imprezy i wybrane usługi. Już dodamy je do wiadomości.</p></li>
                 </ol>
                 <a href={emailHref} onClick={handleEmailClick} className="primaryButton contactWrite">
                   <span>Przygotuj wiadomość</span>

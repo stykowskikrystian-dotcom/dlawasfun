@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const availableServices = [
-  { id: "fotobudka-360", name: "Fotobudka 360°" },
-  { id: "oprawa-muzyczna", name: "Oprawa muzyczna" },
-  { id: "fontanna-iskier", name: "Fontanna iskier" },
-  { id: "dekoracja-swiatlem", name: "Dekoracja światłem" },
-  { id: "ciezki-dym", name: "Ciężki dym" },
-  { id: "saksofonista", name: "Saksofonista" },
-  { id: "napis-love", name: "Napis LOVE" },
+  { id: "fotobudka-360", name: "Fotobudka 360°", image: "/media/services/fotobudka-360.png" },
+  { id: "oprawa-muzyczna", name: "Oprawa muzyczna", image: "/media/attractions/oprawa-muzyczna.webp" },
+  { id: "fontanna-iskier", name: "Fontanna iskier", image: "/media/attractions/iskry.webp" },
+  { id: "dekoracja-swiatlem", name: "Dekoracja światłem", image: "/media/attractions/swiatlo.webp" },
+  { id: "ciezki-dym", name: "Ciężki dym", image: "/media/attractions/dym.webp" },
+  { id: "saksofonista", name: "Saksofonista", image: "/media/attractions/saksofonista.webp" },
+  { id: "napis-love", name: "Napis LOVE", image: "/media/attractions/love.webp" },
 ] as const;
 
 type ServiceId = (typeof availableServices)[number]["id"];
@@ -175,6 +175,7 @@ export default function Home() {
     : "• Jeszcze nie wybrano. Podpowiedzcie nam, czego potrzebujecie.";
   const emailBody = `Dzień dobry,\n\nproszę o informację dotyczącą organizacji wydarzenia.\n\nTermin: ${eventDate || "do ustalenia"}\nMiejsce i goście: ${eventPlace || "do uzupełnienia"}\nWasz pomysł: ${eventIdea || "do uzupełnienia"}\n\nWybrane usługi:\n${selectedServiceList}\n`;
   const emailHref = `mailto:kontakt@dlawas.fun?subject=${encodeURIComponent("Zapytanie o termin - dlawas.fun")}&body=${encodeURIComponent(emailBody)}`;
+  const smsHref = `sms:+48780059216?body=${encodeURIComponent(emailBody)}`;
 
   useEffect(() => {
     const hydrateCart = window.setTimeout(() => {
@@ -282,6 +283,10 @@ export default function Home() {
     trackAnalyticsEvent("generate_lead", { selected_services: selectedServiceIds.length, contact_method: "email" });
   };
 
+  const handleSmsClick = () => {
+    trackAnalyticsEvent("generate_lead", { selected_services: selectedServiceIds.length, contact_method: "sms" });
+  };
+
   return (
     <main>
       <header className="siteHeader">
@@ -345,8 +350,8 @@ export default function Home() {
           <h1>Twoja impreza<br /><em>W pełnym obrocie</em></h1>
           <p className="heroLead">Dynamiczne klipy 360°, efektowne slow motion i gotowy film prosto na telefon jeszcze w trakcie imprezy. Obsługujemy Giżycko, Mikołajki, Ryn, Mrągowo i całe Mazury.</p>
           <div className="heroActions">
-            <a className="primaryButton" href="#kontakt" onClick={() => {
-              if (!selectedServiceIds.includes("fotobudka-360")) toggleService("fotobudka-360");
+            <a className="primaryButton" href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216" onClick={() => {
+              trackAnalyticsEvent("generate_lead", { selected_services: selectedServiceIds.length, contact_method: "hero_phone" });
             }}>
               <span>Zarezerwuj fotobudkę 360°</span>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
@@ -489,34 +494,13 @@ export default function Home() {
           </div>
 
           <div className="serviceGrid">
-            <article className="serviceCard serviceCardPhotoBooth">
-              <div className="serviceMedia">
-                <Image
-                  src="/media/services/fotobudka-360.png"
-                  alt="Goście korzystający z platformy fotobudki 360 podczas eleganckiego przyjęcia"
-                  fill
-                  sizes="(max-width: 767px) 100vw, 58vw"
-                />
-                <div className="serviceMediaTop">
-                  <span className="serviceNumber">01</span>
-                  <div className="serviceIcon serviceIcon360" aria-hidden="true"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="22" rx="11" ry="4" /><path d="M5 22V11M27 22V11M5 11l4-3M27 11l-4-3M8 8h16" /><rect x="13" y="5" width="6" height="9" rx="2" /><path d="M9 25c2 2 4.4 3 7 3s5-1 7-3" /></svg></div>
-                </div>
-              </div>
-              <div className="serviceBody">
-                <span className="serviceEyebrow">Klip, który robi obrót</span>
-                <h3>Fotobudka 360°</h3>
-                <p>Goście wchodzą na platformę, a obracające się ramię kamery nagrywa dynamiczny klip z każdej strony. Dodajemy slow motion, muzykę i efektowną oprawę, a gotowy film można odebrać na telefon jeszcze podczas imprezy.</p>
-                <ServiceAddButton serviceId="fotobudka-360" selected={selectedServiceIds.includes("fotobudka-360")} onToggle={toggleService} />
-              </div>
-            </article>
-
             <article className="serviceCard serviceCardFeatured">
               <div className="serviceMedia">
                 <video autoPlay muted loop playsInline preload="metadata" poster="/media/services/wesela.jpg" aria-label="Goście bawiący się podczas wesela">
                   <source src="/media/services/wesela.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">02</span>
+                  <span className="serviceNumber">01</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="12.5" cy="18" r="6.5" /><circle cx="19.5" cy="18" r="6.5" /><path d="m16 3 1.1 3 3 1.1-3 1.1-1.1 3-1.1-3-3-1.1 3-1.1L16 3Z" /></svg></div>
                 </div>
               </div>
@@ -533,7 +517,7 @@ export default function Home() {
                   <source src="/media/services/eventy.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">03</span>
+                  <span className="serviceNumber">02</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 26h22M8 26v-8h16v8M10 18l6-9 6 9" /><circle cx="7" cy="7" r="2" /><circle cx="25" cy="7" r="2" /><path d="m8.5 8.5 5 7M23.5 8.5l-5 7M16 4v5" /></svg></div>
                 </div>
               </div>
@@ -550,7 +534,7 @@ export default function Home() {
                   <source src="/media/services/naglosnienie.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">04</span>
+                  <span className="serviceNumber">03</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><rect x="8" y="3.5" width="16" height="25" rx="3" /><circle cx="16" cy="11" r="3" /><circle cx="16" cy="21" r="5" /><path d="M4.5 10c-2 3.5-2 8.5 0 12M27.5 10c2 3.5 2 8.5 0 12" /></svg></div>
                 </div>
               </div>
@@ -567,7 +551,7 @@ export default function Home() {
                   <source src="/media/services/animacje.mp4" type="video/mp4" />
                 </video>
                 <div className="serviceMediaTop">
-                  <span className="serviceNumber">05</span>
+                  <span className="serviceNumber">04</span>
                   <div className="serviceIcon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="14" cy="7" r="3" /><path d="m14 11-4 5 5 3-2 9M14 12l5 4 5-3M16 19l5 8" /><path d="m25 4 .8 2.2L28 7l-2.2.8L25 10l-.8-2.2L22 7l2.2-.8L25 4ZM6 20l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2Z" /></svg></div>
                 </div>
               </div>
@@ -620,9 +604,30 @@ export default function Home() {
             </article>
 
             <article className="attractionCard">
+              <div className="attractionMedia attractionMediaPhotoBooth">
+                <Image
+                  src="/media/services/fotobudka-360.png"
+                  alt="Goście korzystający z platformy fotobudki 360 podczas eleganckiego przyjęcia"
+                  fill
+                  sizes="(max-width: 767px) 100vw, 33vw"
+                />
+                <span className="attractionIndex">02</span>
+                <div className="attractionIcon attractionIcon360" aria-hidden="true">
+                  <svg viewBox="0 0 40 40"><ellipse cx="20" cy="28" rx="13" ry="5" /><path d="M7 28V14M33 28V14M7 14l5-4M33 14l-5-4M11 10h18" /><rect x="16" y="6" width="8" height="11" rx="2" /><path d="M11 32c2.5 2.2 5.5 3 9 3s6.5-.8 9-3" /></svg>
+                </div>
+              </div>
+              <div className="attractionBody">
+                <span className="attractionLabel">Klip w pełnym obrocie</span>
+                <h3>Fotobudka 360°</h3>
+                <p>Goście wchodzą na platformę, a obracające się ramię nagrywa dynamiczny klip z każdej strony. Dodajemy slow motion, muzykę i gotowy film do odebrania na telefon jeszcze podczas imprezy.</p>
+                <ServiceAddButton serviceId="fotobudka-360" selected={selectedServiceIds.includes("fotobudka-360")} onToggle={toggleService} />
+              </div>
+            </article>
+
+            <article className="attractionCard">
               <div className="attractionMedia">
                 <img src="/media/attractions/iskry.webp" alt="Para Młoda tańcząca pomiędzy fontannami zimnych iskier" loading="lazy" />
-                <span className="attractionIndex">02</span>
+                <span className="attractionIndex">03</span>
                 <div className="attractionIcon attractionIconSpark" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M20 4v10M20 26v10M4 20h10M26 20h10M8.7 8.7l7.1 7.1M24.2 24.2l7.1 7.1M31.3 8.7l-7.1 7.1M15.8 24.2l-7.1 7.1" /><circle cx="20" cy="20" r="4" /></svg>
                 </div>
@@ -638,7 +643,7 @@ export default function Home() {
             <article className="attractionCard">
               <div className="attractionMedia">
                 <img src="/media/attractions/swiatlo.webp" alt="Oświetlony parkiet i sala podczas przyjęcia weselnego" loading="lazy" />
-                <span className="attractionIndex">03</span>
+                <span className="attractionIndex">04</span>
                 <div className="attractionIcon" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M8 31h24M12 31l5-18h6l5 18M15 20h10M7 9l7 5M33 9l-7 5M20 3v7" /><path d="M11 35h18" /></svg>
                 </div>
@@ -654,7 +659,7 @@ export default function Home() {
             <article className="attractionCard">
               <div className="attractionMedia">
                 <img src="/media/attractions/dym.webp" alt="Pierwszy taniec Pary Młodej w chmurach ciężkiego dymu" loading="lazy" />
-                <span className="attractionIndex">04</span>
+                <span className="attractionIndex">05</span>
                 <div className="attractionIcon attractionIconCloud" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M10 27h19a6 6 0 0 0 .5-12A10 10 0 0 0 10.8 18 4.5 4.5 0 0 0 10 27Z" /><path d="M7 32h26M12 36h18" /></svg>
                 </div>
@@ -670,7 +675,7 @@ export default function Home() {
             <article className="attractionCard attractionCardHalf">
               <div className="attractionMedia">
                 <img src="/media/attractions/saksofonista.webp" alt="Saksofonista grający podczas przyjęcia" loading="lazy" />
-                <span className="attractionIndex">05</span>
+                <span className="attractionIndex">06</span>
                 <div className="attractionIcon attractionIconSax" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M15 5h8l-2 6v10c0 6 3 10 8 10 3 0 5-2 5-5 0-2-1-4-3-5" /><path d="M20 12h-5M20 17h-6M21 22h-5M29 21l3-3M27 17l3-3" /><circle cx="14" cy="12" r="1.3" /><circle cx="13" cy="18" r="1.3" /><path d="M10 7c4 0 6 2 6 5v10c0 8 4 13 11 13" /></svg>
                 </div>
@@ -686,7 +691,7 @@ export default function Home() {
             <article className="attractionCard attractionCardHalf">
               <div className="attractionMedia">
                 <img src="/media/attractions/love.webp" alt="Podświetlany napis LOVE na czarnym tle" loading="lazy" />
-                <span className="attractionIndex">06</span>
+                <span className="attractionIndex">07</span>
                 <div className="attractionIcon attractionIconHeart" aria-hidden="true">
                   <svg viewBox="0 0 40 40"><path d="M20 33S7 25 7 15.5C7 9.8 14.2 7 20 13c5.8-6 13-3.2 13 2.5C33 25 20 33 20 33Z" /><path d="m17 16 3 3 4-5" /></svg>
                 </div>
@@ -702,7 +707,7 @@ export default function Home() {
           </div>
 
           <div className="attractionsOutro">
-            <div><span>6</span><p>atrakcji, z których ułożymy Wasz zestaw</p></div>
+            <div><span>7</span><p>atrakcji, z których ułożymy Wasz zestaw</p></div>
             <p>Nie musicie wybierać w ciemno. Powiedzcie nam, gdzie i dla ilu osób organizujecie wydarzenie, a podpowiemy atrakcje, które najlepiej zagrają razem.</p>
             <a className="primaryButton" href="#kontakt"><span>Ułóżmy Wasz pakiet</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
           </div>
@@ -762,11 +767,6 @@ export default function Home() {
             </div>
 
             <div className="contactQuickActions" aria-label="Szybki kontakt">
-              <a className="contactQuickAction contactQuickActionPrimary" href="tel:+48780059216" aria-label="Zadzwoń teraz pod numer 780 059 216">
-                <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
-                <span><small>Najprościej i najszybciej</small><strong>Zadzwoń teraz</strong><em>780 059 216</em></span>
-                <b aria-hidden="true"><ArrowUpRightIcon /></b>
-              </a>
               <a className="contactQuickAction" href={emailHref} onClick={handleEmailClick} aria-label="Napisz e-mail i zapytaj o termin">
                 <i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m4 7 8 6 8-6" /></svg></i>
                 <span><small>Macie już datę?</small><strong>Zapytaj o termin</strong><em>kontakt@dlawas.fun</em></span>
@@ -888,9 +888,9 @@ export default function Home() {
                 <div className="serviceCartBody">
                   {selectedServices.length ? (
                     <ul>
-                      {selectedServices.map((service, index) => (
+                      {selectedServices.map((service) => (
                         <li key={service.id}>
-                          <span>{String(index + 1).padStart(2, "0")}</span>
+                          <span className="serviceCartThumbnail"><Image src={service.image} alt="" fill sizes="44px" /></span>
                           <strong>{service.name}</strong>
                           <button type="button" onClick={() => toggleService(service.id)} aria-label={`Usuń usługę: ${service.name}`}>Usuń</button>
                         </li>
@@ -919,11 +919,17 @@ export default function Home() {
                     </label>
                   </div>
 
-                  <a className="serviceCartContact" href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
-                    <Image src="/media/attractions/team/michal.webp" alt="" width={92} height={92} sizes="46px" />
-                    <span><small>Michał • DJ i wodzirej</small><strong>780 059 216</strong></span>
-                    <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
-                  </a>
+                  <div className="serviceCartContactRow">
+                    <a className="serviceCartContact" href="tel:+48780059216" aria-label="Zadzwoń do Michała pod numer 780 059 216">
+                      <Image src="/media/attractions/team/michal.webp" alt="" width={92} height={92} sizes="46px" />
+                      <span><small>Michał • DJ i wodzirej</small><strong>780 059 216</strong></span>
+                      <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.1 3.5H5.7a2 2 0 0 0-2 2.2c.8 7.7 6.9 13.8 14.6 14.6a2 2 0 0 0 2.2-2v-2.4a1.5 1.5 0 0 0-1.2-1.5l-3.1-.6a1.5 1.5 0 0 0-1.5.6l-.8 1a13 13 0 0 1-5.3-5.3l1-.8a1.5 1.5 0 0 0 .6-1.5l-.6-3.1a1.5 1.5 0 0 0-1.5-1.2Z" /></svg></i>
+                    </a>
+                    <a className="serviceCartSms" href={smsHref} onClick={handleSmsClick} aria-label="Wyślij do Michała SMS z przygotowanym zestawem">
+                      <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5.5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8l-5 3v-3H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z" /><path d="M7 10h10M7 13h7" /></svg></i>
+                      <span><small>Gotowy koszyk</small><strong>SMS</strong></span>
+                    </a>
+                  </div>
                 </div>
                 <div className="serviceCartFooter">
                   <p><span>{selectedServices.length}</span> {selectedServices.length === 1 ? "wybrana usługa" : "wybranych usług"}</p>
